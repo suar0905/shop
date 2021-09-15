@@ -7,14 +7,14 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-	<!-- start : submenu include - submenu.jsp의 내용을 가져온다. -->
+<body class="container">
+	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
 	<div>
 		<!-- 절대주소(기준점이 같음) -->
-		<jsp:include page="/partial/submenu.jsp"></jsp:include>
+		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
 	</div>
-	<!-- end : submenu include -->
-	<div class="container p-3 my-3 bg-info text-white">
+	<!-- end : mainMenu include -->
+	<div>
 	<h1>메인페이지</h1>
 	<%
 		// 로그인 전(session 영역안에 null값이면)
@@ -30,6 +30,11 @@
 	%>
 			<div><%=loginMember.getMemberName()%>님 반갑습니다.<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/logOut.jsp"> 로그아웃</a></div>
 			<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectMemberOne.jsp">회원정보</a></div>
+	<% 
+			if(loginMember.getMemberLevel() > 0)	 
+	%>
+			<!-- 관리자 페이지로 가는 링크 -->
+			<div><a href="<%=request.getContextPath()%>/admin/adminIndex.jsp">관리자 페이지</a></div>			
 	<% 		
 		}
 	%>

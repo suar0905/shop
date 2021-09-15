@@ -10,7 +10,7 @@
 	<!-- start : submenu include - submenu.jsp의 내용을 가져온다. -->
 	<div>
 		<!-- 절대주소(기준점이 같음) -->
-		<jsp:include page="/partial/submenu.jsp"></jsp:include>
+		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
 	</div>
 	<!-- end : submenu include -->
 	<h1>test page</h1>

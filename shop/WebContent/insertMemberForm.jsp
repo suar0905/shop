@@ -36,7 +36,6 @@
 					<th>레벨 : </th>
 					<td>
 						<input type="radio" name="memberLevel" value="0">0단계
-						<input type="radio" name="memberLevel" value="1">1단계
 					</td>
 				</tr>
 				<!-- memberName -->

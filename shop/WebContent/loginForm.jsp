@@ -17,8 +17,14 @@
 <title>로그인 페이지</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-	<div class="container">
+<body class="container">
+	<!-- start : submenu include - submenu.jsp의 내용을 가져온다. -->
+	<div>
+		<!-- 절대주소(기준점이 같음) -->
+		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
+	</div>
+	<!-- end : submenu include -->
+	<div>
 	<h1 class="alert alert-info">로그인 페이지</h1>
 	<form class="talbe table-info table-striped" action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
 		<table>
