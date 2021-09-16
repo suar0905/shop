@@ -10,6 +10,75 @@ import commons.ConnUtil;
 import vo.Member;
 
 public class MemberDao {
+	// (9) [관리자] memberNo와 수정될 레벨를 입력받고 회원레벨을 수정
+	public void updateMemberLevelByAdmin(Member member, int memberNewLevel) throws ClassNotFoundException, SQLException {
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : member테이블에서 member_no가 ?(memberNo)일때, member_level을 ?(memberNewLevel)로 수정하여라.
+		String sql = "UPDATE member SET member_level=? WHERE member_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		stmt.setInt(1, memberNewLevel);
+		stmt.setInt(2,member.getMemberNo());
+		
+		// 쿼리 실행
+		stmt.executeUpdate();
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+	}
+	
+	// (8) [관리자] memberNo와 수정될 pw를 입력받고 회원정보를 수정
+	public int updateMemberPwByAdmin(Member member, String memberNewPw) throws ClassNotFoundException, SQLException {
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리생성 및 실행
+		// 쿼리문 : member테이블에서 member_no가 ?(memberNo)일때, member_pw를 ?(memberNewPw)로 수정하여라.
+		String sql = "UPDATE member SET member_pw = password(?) WHERE member_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		stmt.setString(1, memberNewPw);
+		stmt.setInt(2,member.getMemberNo());
+	
+		int updateRs = stmt.executeUpdate();
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
+		return updateRs;
+	}
+	
+	// (7) [관리자] memberNo를 입력받고 회원정보를 삭제
+	public void deleteMemberByAdmin(int memberNo) throws ClassNotFoundException, SQLException {
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : member테이블에서 member_no가 ?(memberNo)일때 행을 삭제하여라.
+		String sql = "DELETE FROM member WHERE member_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		stmt.setInt(1, memberNo);
+		
+		// 쿼리 실행
+		stmt.executeUpdate();
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+	}
 	
 	// (6) [관리자] 검색된 회원의 수
 	public int selectTotalMemberCount(String searchMemberId, int rowPerPage) throws ClassNotFoundException, SQLException {
@@ -34,6 +103,10 @@ public class MemberDao {
 		}
 		System.out.println("[debug] searchTotalCount 회원수 확인 -> " + searchTotalCount);
 
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
 		return searchTotalCount;
 	}
 	
@@ -71,7 +144,7 @@ public class MemberDao {
 		}
 		System.out.println("[debug] list 확인 - > " + list);
 		
-		// 세션 종료
+		// 기록 종료
 		rs.close();
 		stmt.close();
 		conn.close();
@@ -101,6 +174,10 @@ public class MemberDao {
 		}
 		System.out.println("[debug] totalCount 회원수 확인 -> " + totalCount);
 
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
 		return totalCount;
 	}
 		
@@ -137,7 +214,7 @@ public class MemberDao {
 			list.add(member);
 		}
 		
-		// 세션 종료
+		// 기록 종료
 		rs.close();
 		stmt.close();
 		conn.close();

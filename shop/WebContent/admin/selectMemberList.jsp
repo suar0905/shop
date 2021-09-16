@@ -62,7 +62,7 @@
 	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
 	<div>
 		<!-- 절대주소(기준점이 같음) -->
-		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
+		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
 	</div>
 	<!-- end : mainMenu include -->
 	<h1>회원 목록</h1>
@@ -77,6 +77,9 @@
 				<th>memberGender</th>
 				<th>updateDate</th>
 				<th>createDate</th>
+				<th>등급수정</th>
+				<th>비밀번호수정</th>
+				<th>회원탈퇴</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -100,12 +103,25 @@
 						<% 		
 							}			
 						%>	
+						(<%=request.getContextPath()%>)
 					</td>
 					<td><%=m.getMemberName()%></td>
 					<td><%=m.getMemberAge()%></td>
 					<td><%=m.getMemberGender()%></td>
 					<td><%=m.getUpdateDate()%></td>
 					<td><%=m.getCreateDate()%></td>
+					<td>
+						<!-- 특정회원의 등급을 수정한다. -->
+						<a href="<%=request.getContextPath()%>/admin/updateMemberLevelForm.jsp?memberNo=<%=m.getMemberNo()%>&memberLevel=<%=m.getMemberLevel()%>">등급수정</a>
+					</td>
+					<td>
+						<!-- 특정 회원의 비밀번호를 수정한다. -->
+						<a href="<%=request.getContextPath()%>/admin/updateMemberPwForm.jsp?memberNo=<%=m.getMemberNo()%>&memberName=<%=m.getMemberName()%>">비밀번호수정</a>
+					</td>
+					<td>
+						<!-- 특정 회원 정보를 강제 탈퇴시킨다. -->
+						<a href="<%=request.getContextPath()%>/admin/deleteMemberForm.jsp?memberNo=<%=m.getMemberNo()%>">회원탈퇴</a>
+					</td>
 				</tr>
 			<%      
             	}

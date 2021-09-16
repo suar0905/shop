@@ -62,7 +62,7 @@
 	
 	if(insertRs == 1){ // 입력성공
 		System.out.println("[debug] 정상적으로 입력이 수행되었습니다!");
-		response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
 	} else{ // 입력실패
 		System.out.println("[debug] 입력에 실패하였습니다. 다시 시도해주세요.");
 		response.sendRedirect(request.getContextPath() + "/insertMemberForm.jsp");
