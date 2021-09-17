@@ -10,6 +10,39 @@ import commons.ConnUtil;
 import vo.Member;
 
 public class MemberDao {
+	
+	// (10) [회원] 회원가입 전 중복아이디(memberId) 검사
+	public String selectMemberId(String memberIdCheck) throws ClassNotFoundException, SQLException {
+		// 디버깅 코드
+		System.out.println("[debug] MemberDao.selectMemberId param : memberIdCheck -> " + memberIdCheck);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		String memberId = null;
+		// 쿼리 생성
+		// 쿼리문 : member테이블에서 member_id가 ?(memberIdCheck)일 때 memberId 항목값을 구하여라.
+		String sql = "SELECT member_id memberId FROM member WHERE member_id=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 -> " + stmt);
+		stmt.setString(1, memberIdCheck);
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			memberId = rs.getString("memberId");
+		}
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return memberId; // memberId가 null이 나오면 사용가능한 id이다.
+	}
+	
 	// (9) [관리자] memberNo와 수정될 레벨를 입력받고 회원레벨을 수정
 	public void updateMemberLevelByAdmin(Member member, int memberNewLevel) throws ClassNotFoundException, SQLException {
 		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용

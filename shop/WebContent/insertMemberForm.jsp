@@ -19,12 +19,35 @@
 <body>
 	<div class="container">
 		<h1 class="alert alert-info">회원가입 페이지</h1>
-		<form class="talbe table-info table-striped" action="insertMemberAction.jsp" method="post">
+		
+		<%
+			// memberIdCheck : 아이디 확인 값
+			String memberIdCheck = "";
+			if(request.getParameter("memberIdCheck") != null) {
+				memberIdCheck = request.getParameter("memberIdCheck");
+			}
+		
+		%>
+		
+		<!-- selectMemberIdCheckAction에서 idCheckResult값 가져옴 -->
+		<div><input type="hidden" value="<%=request.getParameter("idCheckResult")%>"></div>
+		
+		<!-- 아이디(memberId)를 사용가능한지 확인하는 폼 -->
+		<form class="talbe table-info table-striped" action="<%=request.getContextPath()%>/selectMemberIdCheckAction.jsp" method="post">
+			<div>
+				중복아이디 검사 :
+				<input type="text" name="memberIdCheck">
+				<input class="btn btn-dark" type="submit" value="중복아이디 검사">
+			</div>
+		</form>
+		
+		<!-- 회원가입을 할 때 사용하는 폼 -->
+		<form class="talbe table-info table-striped" action="<%=request.getContextPath()%>/insertMemberAction.jsp" method="post">
 			<table border="">
 				<!-- memberId -->
 				<tr>
 					<th>아이디 : </th>
-					<td><input type="text" name="memberId"></td>
+					<td><input type="text" name="memberId" readonly="readonly" value=<%=memberIdCheck%>></td>
 				</tr>
 				<!-- memberPw -->
 				<tr>

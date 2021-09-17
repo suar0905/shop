@@ -58,13 +58,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
+
 	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
 	<div>
 		<!-- 절대주소(기준점이 같음) -->
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
 	</div>
 	<!-- end : mainMenu include -->
+	
 	<h1>회원 목록</h1>
 	<table class="talbe table-info table-striped" border="1">
 		<thead>
@@ -129,26 +131,26 @@
          </tbody>
 	</table>
    	<div>
-<%
-	if (currentPage > 1) {
-%>
-		<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage-1%>&searchMemberId=<%=searchMemberId%>">이전</a>
-<%
-	}
-%>
-<%		
-	int lastPage = totalCount / ROW_PER_PAGE;
-	
-	if (totalCount % ROW_PER_PAGE != 0) {
-		lastPage += 1;
-	}
-
-	if (currentPage < lastPage) {
-%>
-		<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage+1%>&searchMemberId=<%=searchMemberId%>">다음</a>
-<%
-	}
-%>
+		<%
+			if (currentPage > 1) {
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage-1%>&searchMemberId=<%=searchMemberId%>">이전</a>
+		<%
+			}
+		%>
+		<%		
+			int lastPage = totalCount / ROW_PER_PAGE;
+			
+			if (totalCount % ROW_PER_PAGE != 0) {
+				lastPage += 1;
+			}
+		
+			if (currentPage < lastPage) {
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage+1%>&searchMemberId=<%=searchMemberId%>">다음</a>
+		<%
+			}
+		%>
 	</div>
 	<div>
 	<!-- memberId로 검색 -->
