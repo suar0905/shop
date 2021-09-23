@@ -151,7 +151,7 @@
 					<tr>
 						<td><%=e.getEbookNo()%></td>
 						<td><%=e.getCategoryName()%></td>
-						<td><%=e.getEbookTitle()%></td>
+						<td><a href="<%=request.getContextPath()%>/admin/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></td>
 						<td><%=e.getEbookState()%></td>
 					</tr>	
 			<% 		

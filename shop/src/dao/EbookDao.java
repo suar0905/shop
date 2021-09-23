@@ -11,6 +11,137 @@ import vo.Ebook;
 
 public class EbookDao {
 	
+	// (8) [관리자] 전자책 가격 수정 코드(ebookNo, ebookPrice 이용)
+	public void updateEbookPrice(Ebook ebook, int ebookNewPrice) throws ClassNotFoundException, SQLException {
+		// updateEbookPrice메소드의 ebookNo 입력값 확인
+		System.out.println("[debug] ebookNo param 확인 -> " + ebook.getEbookNo());
+		// updateEbookPrice메소드의 ebookNewPrice 입력값 확인
+		System.out.println("[debug] ebookNewPrice param 확인 -> " + ebookNewPrice);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : ebook테이블에서 ebook_no가 ?(ebook.getEbookNo())일때, ebook_price를 ?(ebookNewPrice)로 수정하여라. 
+		String sql = "UPDATE ebook SET ebook_price=? WHERE ebook_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ebookNewPrice);
+		stmt.setInt(2, ebook.getEbookNo());
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		
+		// 쿼리 실행
+		stmt.executeUpdate();
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+	}
+	
+	// (7) [관리자] 전자책 삭제 코드(ebookNo, ebookTitle 이용)
+	public int deleteEbook(Ebook ebook) throws ClassNotFoundException, SQLException {
+		// deleteEbook메소드의 ebookNo 입력값 확인
+		System.out.println("[debug] ebookNo param 확인 -> " + ebook.getEbookNo());
+		// deleteEbook메소드의 ebookTitle 입력값 확인
+		System.out.println("[debug] ebookTitle param 확인 -> " + ebook.getEbookTitle());
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : ebook테이블에서 ebook_no가 ?(ebook.getEbookNo())이고 ebook_title이 ?(ebook.getEbookTitle())일때, 해당되는 데이터를 삭제하여라. 
+		String sql = "DELETE FROM ebook WHERE ebook_no=? AND ebook_title=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ebook.getEbookNo());
+		stmt.setString(2, ebook.getEbookTitle());
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		
+		// 쿼리 실행
+		int deleteRs = stmt.executeUpdate();
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
+		return deleteRs;
+	}
+	
+	// (6) [관리자] 이미지 수정 코드
+	public void updateEbookImg(Ebook ebook) throws ClassNotFoundException, SQLException {
+		// updateEbookImg메소드의 ebookImg 입력값 확인
+		System.out.println("[debug] ebookImg param 확인 -> " + ebook.getEbookImg());
+		// updateEbookImg메소드의 ebookNo 입력값 확인
+		System.out.println("[debug] ebookNo param 확인 -> " + ebook.getEbookNo());
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : 
+		String sql = "UPDATE ebook SET ebook_img=? WHERE ebook_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, ebook.getEbookImg());
+		stmt.setInt(2, ebook.getEbookNo());
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		
+		// 쿼리 실행
+		stmt.executeUpdate();
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+	}
+	
+	// (5) [관리자] ebookNo에 따른 전자책 상세보기 코드
+	public Ebook selectEbookOne(int ebookNo) throws ClassNotFoundException, SQLException {
+		// selectEbookOne메소드의 ebookNo 입력값 확인
+		System.out.println("[debug] ebookNo param 확인 -> " + ebookNo);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : 
+		String sql = "SELECT ebook_no ebookNo, category_name categoryName, ebook_title ebookTitle, ebook_author ebookAuthor, ebook_company ebookCompany, ebook_page_count ebookPageCount, ebook_price ebookPrice, ebook_img ebookImg, ebook_summary ebookSummary, ebook_state ebookState, create_date createDate, update_date updateDate FROM ebook WHERE ebook_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ebookNo);
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		
+		Ebook ebook = null;
+		if(rs.next()) {
+			ebook = new Ebook();
+			ebook.setEbookNo(rs.getInt("ebookNo"));
+			ebook.setCategoryName(rs.getString("categoryName"));
+			ebook.setEbookTitle(rs.getString("ebookTitle"));
+			ebook.setEbookAuthor(rs.getString("ebookAuthor"));
+			ebook.setEbookCompany(rs.getString("ebookCompany"));
+			ebook.setEbookPageCount(rs.getInt("ebookPageCount"));
+			ebook.setEbookPrice(rs.getInt("ebookPrice"));	
+			ebook.setEbookImg(rs.getString("ebookImg"));
+			ebook.setEbookSummary(rs.getString("ebookSummary"));
+			ebook.setEbookState(rs.getString("ebookState"));
+			ebook.setCreateDate(rs.getString("createDate"));
+			ebook.setUpdateDate(rs.getString("updateDate"));
+		}
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return ebook;
+	}
+	
 	// (4) [관리자] 검색된(categoryName) ebook의 수
 	public int selectTotalEbookCount(String categoryName) throws ClassNotFoundException, SQLException {
 		// selectTotalEbookCount메소드의 categoryName 입력값 확인
