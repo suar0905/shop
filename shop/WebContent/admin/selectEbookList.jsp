@@ -7,7 +7,7 @@
 	// 한글 깨짐 방지(request값을 받을 때는 무조건 쓰기)
 	request.setCharacterEncoding("utf-8");
 
-	// (로그인 하지 못한 사람)과 (로그인을 했더라도 memberLevel이 1보다 작은 사람)은 들어오지 못하게 하는 코드
+	// (1)(로그인 하지 못한 사람)과 (로그인을 했더라도 memberLevel이 1보다 작은 사람)은 들어오지 못하게 하는 코드
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	if(loginMember == null || loginMember.getMemberLevel() < 1){
 		System.out.println("로그인을 하세요");
@@ -29,21 +29,21 @@
 	// 목록 데이터 시작 행
 	int beginRow = (currentPage - 1) * Row_PER_PAGE;
 	
-	// (1) Ebook 클래스 객체 생성
+	// (2) Ebook 클래스 객체 생성
 	Ebook ebook = new Ebook();
 	
-	// (2) EbookDao 클래스 객체 생성
+	// (3) EbookDao 클래스 객체 생성
 	EbookDao ebookDao = new EbookDao();
 	
-	// (3) CategoryDao 클래스 객체 생성
+	// (4) CategoryDao 클래스 객체 생성
 	CategoryDao categoryDao = new CategoryDao();
 		
-	// (4) Category 클래스 배열 객체 생성
+	// (5) Category 클래스 배열 객체 생성
 	ArrayList<Category> categoryList = new ArrayList<Category>();
 	categoryList = categoryDao.selectCategoryListAllByPage(beginRow, Row_PER_PAGE);
 	System.out.println("[debug] categoryList 확인 -> " + categoryList);
 	
-	// (5) Ebook 클래스 배열 객체 생성
+	// (6) Ebook 클래스 배열 객체 생성
 	ArrayList<Ebook> ebookList = new ArrayList<Ebook>();
 	
 	// categoryName을 기준으로 검색 문제 해결
