@@ -4,7 +4,7 @@
 <%@ page import="java.util.*"%>
 
 <%
-	//한글 깨짐 방지(request값을 받을 때는 무조건 쓰기)
+	// 한글 깨짐 방지(request값을 받을 때는 무조건 쓰기)
 	request.setCharacterEncoding("utf-8");
 
 	// (로그인 하지 못한 사람)과 (로그인을 했더라도 memberLevel이 1보다 작은 사람)은 들어오지 못하게 하는 코드

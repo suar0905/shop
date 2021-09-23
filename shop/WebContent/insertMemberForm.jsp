@@ -79,7 +79,7 @@
 						<input type="radio" name="memberGender" value="여">여
 					</td>
 				</tr>			
-			</table>
+			</table>		
 			<br>
 			<div>
 				<input class="btn btn-dark" type="submit" value="회원가입하기">

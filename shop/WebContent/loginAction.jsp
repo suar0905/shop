@@ -39,8 +39,10 @@
 		return; 
 	} else {
 		System.out.println("로그인에 성공하였습니다.");
-		System.out.println(returnMember.getMemberId());
-		System.out.println(returnMember.getMemberName());
+		System.out.println("[debug] 로그인 정보 -> " + returnMember.getMemberNo());
+		System.out.println("[debug] 로그인 정보 -> " + returnMember.getMemberId());
+		System.out.println("[debug] 로그인 정보 -> " + returnMember.getMemberLevel());
+		System.out.println("[debug] 로그인 정보 -> " + returnMember.getMemberName());
 		// 변수이름:loginMember, 값:returnMebmer, loginMember안에는 Member타입의 returnMember변수(memberId, memberName)가 들어가 있다.
 		session.setAttribute("loginMember", returnMember);
 		response.sendRedirect(request.getContextPath() + "/index.jsp");
