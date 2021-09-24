@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="vo.Member"%>
+<%@ page import="vo.*"%>
+<%@ page import="dao.*"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,5 +41,47 @@
 		}
 	%>
 	</div>
+	<!-- 상품 목록 출력 -->
+	<%
+		// 페이징
+		int currentPage = 1;
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		// 디버깅 코드
+		System.out.println("[debug] currentPage 확인 -> " + currentPage);
+		
+		// 목록 데이터 보여질 행의 수(final -> 바뀔 수 없음)
+		final int Row_PER_PAGE = 20;
+		
+		// 목록 데이터 시작 행
+		int beginRow = (currentPage - 1) * Row_PER_PAGE;
+		
+		// (1) EbookDao 클래스 객체 생성
+		EbookDao ebookDao = new EbookDao();
+	
+		// (2) Ebook 클래스 배열 객체 생성
+		ArrayList<Ebook> ebookList = ebookDao.selectEbookList(beginRow, Row_PER_PAGE);
+	%>
+	<table border="1">
+		<%
+			int i = 0; // 줄바꿈하기 위한 변수
+			for(Ebook e : ebookList) {
+		%>
+				<td>
+					<div><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></div>
+					<div><%=e.getEbookTitle()%></div>
+					<div>₩ <%=e.getEbookPrice()%></div>
+				</td>	
+		<% 		
+				i=i+1; // for문이 끝날때마다 i가 1씩 증가한다.
+				if(i%5==0) { // i가 5로 나누어 떨어지면
+		%>
+					<tr></tr> <!-- 줄바꿈 -->
+		<% 
+				}
+			}
+		%>
+	</table>
 </body>
 </html>

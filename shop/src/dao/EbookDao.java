@@ -255,7 +255,7 @@ public class EbookDao {
 		return list;
 	}
 	
-	// (1) [관리자] 전자책 목록 보기
+	// (1) [관리자 & 고객] 전자책 목록 보기
 	public ArrayList<Ebook> selectEbookList(int beginRow, int rowPerPage) throws ClassNotFoundException, SQLException {
 		// selectEbookList메소드의 beginRow 입력값 확인
 		System.out.println("[debug] beginRow param 확인 -> " + beginRow);
@@ -269,7 +269,7 @@ public class EbookDao {
 		
 		// 쿼리 생성 
 		// 쿼리문 : ebook테이블에서 create_date를 내림차순으로 ?(beginRow)부터 ?(rowPerPage)까지 ebookNo, categoryName, ebookTitle, ebookState 항목을 조회하여라.
-		String sql = "SELECT ebook_no ebookNo, category_name categoryName, ebook_title ebookTitle, ebook_state ebookState FROM ebook ORDER BY create_date DESC LIMIT ?,?";
+		String sql = "SELECT ebook_no ebookNo, category_name categoryName, ebook_img ebookImg, ebook_Price ebookPrice, ebook_title ebookTitle, ebook_state ebookState FROM ebook ORDER BY create_date DESC LIMIT ?,?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		System.out.println("[debug] stmt 확인 - > " + stmt);
 		stmt.setInt(1, beginRow);
@@ -285,6 +285,8 @@ public class EbookDao {
 			Ebook returnEbook = new Ebook();
 			returnEbook.setEbookNo(rs.getInt("ebookNo"));
 			returnEbook.setCategoryName(rs.getString("categoryName"));
+			returnEbook.setEbookImg(rs.getString("ebookImg"));
+			returnEbook.setEbookPrice(rs.getInt("ebookPrice"));
 			returnEbook.setEbookTitle(rs.getString("ebookTitle"));
 			returnEbook.setEbookState(rs.getString("ebookState"));
 			list.add(returnEbook);
