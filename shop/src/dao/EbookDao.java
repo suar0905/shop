@@ -11,6 +11,81 @@ import vo.Ebook;
 
 public class EbookDao {
 	
+	// (10) [회원] 신상품 목록 5개 출력 코드
+	public ArrayList<Ebook> selectNewEbookList() throws ClassNotFoundException, SQLException {
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성 
+		// 쿼리문 : 
+		String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice, ebook_img ebookImg FROM ebook ORDER BY create_date DESC LIMIT 0,5";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 - > " + stmt);
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		
+		// 9.1) Ebook 클래스 배열 객체 생성
+		ArrayList<Ebook> list = new ArrayList<Ebook>();
+		while(rs.next()) {
+			// 1.2) Ebook 클래스 객체 생성
+			Ebook returnEbook = new Ebook();
+			returnEbook.setEbookNo(rs.getInt("ebookNo"));
+			returnEbook.setEbookTitle(rs.getString("ebookTitle"));
+			returnEbook.setEbookPrice(rs.getInt("ebookPrice"));
+			returnEbook.setEbookImg(rs.getString("ebookImg"));
+			list.add(returnEbook);
+		}
+		System.out.println("[debug] list 확인 - > " + list);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return list;
+	}
+	
+	// (9) [회원] 인기 상품 목록 5개 출력 코드
+	public ArrayList<Ebook> selectPopularEbookList() throws ClassNotFoundException, SQLException {
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성 
+		// 쿼리문 : 
+		String sql = "SELECT t.ebook_no ebookNo, e.ebook_title ebookTitle, e.ebook_img ebookImg, e.ebook_price ebookPrice FROM ebook e INNER JOIN (SELECT ebook_no, COUNT(ebook_no) cnt FROM orders GROUP BY ebook_no ORDER BY COUNT(ebook_no) DESC LIMIT 0,5) t ON e.ebook_no= t.ebook_no";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 - > " + stmt);
+		
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		
+		// 9.1) Ebook 클래스 배열 객체 생성
+		ArrayList<Ebook> list = new ArrayList<Ebook>();
+		while(rs.next()) {
+			// 1.2) Ebook 클래스 객체 생성
+			Ebook returnEbook = new Ebook();
+			returnEbook.setEbookNo(rs.getInt("ebookNo"));
+			returnEbook.setEbookTitle(rs.getString("ebookTitle"));
+			returnEbook.setEbookImg(rs.getString("ebookImg"));
+			returnEbook.setEbookPrice(rs.getInt("ebookPrice"));
+			list.add(returnEbook);
+		}
+		System.out.println("[debug] list 확인 - > " + list);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return list;
+	}
+	
 	// (8) [관리자] 전자책 가격 수정 코드(ebookNo, ebookPrice 이용)
 	public void updateEbookPrice(Ebook ebook, int ebookNewPrice) throws ClassNotFoundException, SQLException {
 		// updateEbookPrice메소드의 ebookNo 입력값 확인
