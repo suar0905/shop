@@ -34,7 +34,7 @@
 			<div><%=loginMember.getMemberName()%>님 반갑습니다.
 			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/logOut.jsp"> 로그아웃</a>
 			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>">회원정보</a>
-			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectOrderListByMember.jsp">나의주문관리</a>
+			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectOrderListByMember.jsp">나의주문목록</a>
 			</div>
 	<% 
 			if(loginMember.getMemberLevel() > 0)	 
