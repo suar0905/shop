@@ -15,9 +15,13 @@ import vo.OrderEbookMember;
 public class OrderDao {
 	
 	// (3) [회원 및 관리자] 나의 주문관리 목록 출력 코드
-	public ArrayList<OrderEbookMember> selectOrderListByMember(int memberNo) throws ClassNotFoundException, SQLException {
+	public ArrayList<OrderEbookMember> selectOrderListByMember(int memberNo, int beginRow, int row_per_page) throws ClassNotFoundException, SQLException {
 		// selectOrderListByMember메소드의 memberNo 입력값 확인
 		System.out.println("[debug] memberNo param 확인 -> " + memberNo);
+		// selectOrderListByMember메소드의 beginRow 입력값 확인
+		System.out.println("[debug] beginRow param 확인 -> " + beginRow);
+		// selectOrderListByMember메소드의 memberNo 입력값 확인
+		System.out.println("[debug] row_per_page param 확인 -> " + row_per_page);
 		
 		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
 		ConnUtil connUtil = new ConnUtil();
@@ -26,10 +30,12 @@ public class OrderDao {
 		
 		// 쿼리 생성
 		// 쿼리문 :  
-		String sql = "SELECT o.order_no orderNo, e.ebook_no ebookNo, e.ebook_title ebookTitle, m.member_no memberNo, m.member_id memberId, o.order_price orderPrice, o.create_date createDate FROM orders o INNER JOIN ebook e INNER JOIN member m ON o.ebook_no = e.ebook_no AND o.member_no = m.member_no WHERE m.member_no=? ORDER BY o.create_date DESC";
+		String sql = "SELECT o.order_no orderNo, e.ebook_no ebookNo, e.ebook_title ebookTitle, m.member_no memberNo, m.member_id memberId, o.order_price orderPrice, o.create_date createDate FROM orders o INNER JOIN ebook e INNER JOIN member m ON o.ebook_no = e.ebook_no AND o.member_no = m.member_no WHERE m.member_no=? ORDER BY o.create_date DESC LIMIT ?,?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		System.out.println("[debug] stmt 확인 - > " + stmt);
 		stmt.setInt(1, memberNo);
+		stmt.setInt(2, beginRow);
+		stmt.setInt(3, row_per_page);
 		
 		// 쿼리 실행
 		ResultSet rs = stmt.executeQuery();

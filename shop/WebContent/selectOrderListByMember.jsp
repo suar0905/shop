@@ -16,6 +16,19 @@
 		return;
 	}
 	
+	// 페이징
+ 	int currentPage = 1;
+ 	if(request.getParameter("currentPage") != null) {
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	}
+	System.out.println("[debug] currentPage 확인 -> " + currentPage);
+	
+	// 1페이지에 보여질 데이터 출력 수
+	final int ROW_PER_PAGE = 10;
+	
+	// 데이터 시작 행
+	int beginRow = (currentPage-1) * ROW_PER_PAGE;
+	
 	// 디버깅 코드
 	System.out.println("[debug] memberNo 확인 -> " + loginMember.getMemberNo());
 	
@@ -23,7 +36,10 @@
 	OrderDao orderDao = new OrderDao();
 	
 	// (3) OrderEbookMember 클래스 배열 객체 생성(해당 memberNo를 갖는 주문관리 페이지)
-	ArrayList<OrderEbookMember> list = orderDao.selectOrderListByMember(loginMember.getMemberNo());
+	ArrayList<OrderEbookMember> list = orderDao.selectOrderListByMember(loginMember.getMemberNo(), beginRow, ROW_PER_PAGE);
+	
+	// (4) OrderCommentDao 클래스 객체 생성
+	OrderCommentDao orderCommentDao = new OrderCommentDao();
 %>	
 <html>
 <head>
@@ -62,14 +78,27 @@
 							<td><%=oem.getOrder().getOrderPrice()%></td>
 							<td><%=oem.getOrder().getCrateDate()%></td>
 							<td><%=oem.getMember().getMemberId()%></td>
-							<td><a href="">상세주문내역</a></td>
-							<td><a href="<%=request.getContextPath()%>/insertOrderCommentForm.jsp?orderNo=<%=oem.getOrder().getOrderNo()%>&ebookNo=<%=oem.getEbook().getEbookNo()%>">ebook후기</a></td>
+							<td><a class="btn btn-outline-dark" href="">상세주문내역</a></td>
+							<% 
+								// 후기가 없다면
+								if(orderCommentDao.selectOrderEbookCommentCheck(oem.getOrder().getOrderNo(), oem.getEbook().getEbookNo()) == 0) {
+							%>
+									<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/insertOrderCommentForm.jsp?orderNo=<%=oem.getOrder().getOrderNo()%>&ebookNo=<%=oem.getEbook().getEbookNo()%>">ebook후기</a></td>
+							<% 		
+								} else {
+							%>		
+									<td>후기작성 완료!</td>
+							<% 				
+								}
+							%>
 						</tr>
 				<% 		
 					}
 				%>
 			</tbody>
 		</table>
+		<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectOrderListByMember.jsp?currentPage=<%=currentPage-1%>">[이전]</a>
+		<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectOrderListByMember.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
 	</div>
 </body>
 </html>
