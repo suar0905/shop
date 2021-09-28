@@ -15,7 +15,8 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- jQuery 사용 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- bootstrap 사용 -->
 </head>
 <body class="container">
 	<!-- start : submenu include - submenu.jsp의 내용을 가져온다. -->
@@ -26,22 +27,36 @@
 	<!-- end : submenu include -->
 	<div>
 	<h1 class="alert alert-info">로그인 페이지</h1>
-	<form class="talbe table-info table-striped" action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
+	<form id="loginForm" class="talbe table-info table-striped" action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
 		<table>
 			<tr>
 				<th>아이디 : </th>
-				<td><input type="text" name="memberId"></td>
+				<td><input type="text" id="memberId" name="memberId" placeholder="Enter Id" value=""></td>
 			</tr>
 			<tr>
 				<th>비밀번호 : </th>
-				<td><input type="password" name="memberPw"></td>
+				<td><input type="password" id="memberPw" name="memberPw" placeholder="Enter Pw" value=""></td>
 			</tr>
 		</table>
 		<br>
-		<input class="btn btn-dark" type="submit" value="로그인">
+		<input class="btn btn-dark" id="loginBtn" type="button" value="로그인" >
 		<input class="btn btn-dark" type="reset" value="초기화">
 		<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
 	</form>
 	</div>
+	
+	<script>
+		// $ = jquery
+		$('#loginBtn').click(function(){ // loginBtn 버튼을 클릭 했을 때 함수를 실행시켜라.
+			if($('#memberId').val() == '') { // id가 공백이면
+				alert('memberId를 입력하세요');
+				return;
+			} else if($('#memberPw').val() == '') { // pw가 공백이면
+				alert('memberPw를 입력하세요');
+			} else {
+				$('#loginForm').submit(); // <button type="button"> -> <button type="submit">	
+			}
+		}); 
+	</script>
 </body>
 </html>

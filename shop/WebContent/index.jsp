@@ -97,8 +97,9 @@
 			for(Ebook e : popularEbookList) {
 		%>
 				<td>
-					<div><a href="#"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
-					<div><a href="#"><%=e.getEbookTitle()%></a></div>
+					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>">
+						<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
+					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
 					<div>₩ <%=e.getEbookPrice()%></div>
 				</td>
 		<% 		
@@ -114,8 +115,8 @@
 			for(Ebook e : ebookList) {
 		%>
 				<td>
-					<div><a href="#"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
-					<div><a href="#"><%=e.getEbookTitle()%></a></div>
+					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
+					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
 					<div>₩ <%=e.getEbookPrice()%></div>
 				</td>	
 		<% 		

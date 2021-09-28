@@ -45,6 +45,7 @@
 <head>
 <meta charset="UTF-8">
 <title>나의 주문 목록</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->

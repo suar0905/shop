@@ -14,6 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -42,51 +43,79 @@
 		</form>
 		
 		<!-- 회원가입을 할 때 사용하는 폼 -->
-		<form class="talbe table-info table-striped" action="<%=request.getContextPath()%>/insertMemberAction.jsp" method="post">
+		<form id="joinForm" class="talbe table-info table-striped" action="<%=request.getContextPath()%>/insertMemberAction.jsp" method="post">
 			<table border="">
 				<!-- memberId -->
 				<tr>
 					<th>아이디 : </th>
-					<td><input type="text" name="memberId" readonly="readonly" value=<%=memberIdCheck%>></td>
+					<td><input type="text" id="memberId" name="memberId" readonly="readonly" value=<%=memberIdCheck%>></td>
 				</tr>
 				<!-- memberPw -->
 				<tr>
 					<th>비밀번호 : </th>
-					<td><input type="password" name="memberPw"></td>
+					<td><input type="password" id="memberPw" name="memberPw" value=""></td>
 				</tr>
 				<!-- memberLevel -->
 				<tr>
-					<th>레벨 : </th>
-					<td>
-						<input type="radio" name="memberLevel" value="0">0단계
-					</td>
+					<th>회원등급 : </th>
+					<td><input type="text" id="memberLevel" name="memberLevel" value="0" readonly="readonly"></td>
 				</tr>
 				<!-- memberName -->
 				<tr>
 					<th>이름 : </th>
-					<td><input type="text" name="memberName"></td>
+					<td><input type="text" id="memberName" name="memberName" value=""></td>
 				</tr>
 				<!-- memberAge -->
 				<tr>
 					<th>나이 : </th>
-					<td><input type="text" name="memberAge"></td>
+					<td><input type="text" id="memberAge" name="memberAge" value=""></td>
 				</tr>
 				<!-- memberGender -->
 				<tr>
 					<th>성별 : </th>
 					<td>
-						<input type="radio" name="memberGender" value="남">남
-						<input type="radio" name="memberGender" value="여">여
+						<input type="radio" class="memberGender" name="memberGender" value="남">남 
+						<input type="radio" class="memberGender" name="memberGender" value="여">여
 					</td>
 				</tr>			
 			</table>		
 			<br>
 			<div>
-				<input class="btn btn-dark" type="submit" value="회원가입하기">
+				<input class="btn btn-dark" id="btn" type="button" value="회원가입하기">
 				<input class="btn btn-dark" type="reset" value="초기화">
 				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
 			</div>
 		</form>
 	</div>
+	
+	<script>
+		// 회원가입 폼 유효성 검사
+		$('#btn').click(function() {
+			if($('#memberId').val() == '') {
+				alert('memberId를 입력하세요');
+				return;
+			}
+			if($('#memberPw').val() == '') {
+				alert('memberPw를 입력하세요');
+				return;
+			}
+			if($('#memberName').val() == '') {
+				alert('memberName를 입력하세요');
+				return;
+			}
+			if($('#memberAge').val() == '') {
+				alert('memberAge를 입력하세요');
+				return;
+			}
+			
+			let memberGender = $('.memberGender:checked'); // :뒤에는 옵션이다. 클래스(.) 속성으로 가져오면 무조건 배열이여서 변수로 지정해준다.
+			if(memberGender.length == 0) {
+				alert('memberGender를 선택하세요');
+				return;
+			}
+			
+			$('#joinForm').submit();
+		});
+	</script>
 </body>
 </html>

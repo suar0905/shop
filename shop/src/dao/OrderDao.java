@@ -14,6 +14,39 @@ import vo.OrderEbookMember;
 
 public class OrderDao {
 	
+	// (4) [회원 및 관리자] 해당 상품 주문하는 코드
+	public int insertOrder(int ebookNo, int memberNo, int orderPrice) throws ClassNotFoundException, SQLException {
+		// insertOrder메소드의 ebookNo 입력값 확인
+		System.out.println("[debug] ebookNo param 확인 -> " + ebookNo);
+		// insertOrder메소드의 memberNo 입력값 확인
+		System.out.println("[debug] memberNo param 확인 -> " + memberNo);
+		// insertOrder메소드의 memberNo 입력값 확인
+		System.out.println("[debug] orderPrice param 확인 -> " + orderPrice);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 :  
+		String sql = "INSERT INTO orders(ebook_no, member_no, order_price, create_date, update_date) VALUES(?,?,?,NOW(),NOW())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ebookNo);
+		stmt.setInt(2, memberNo);
+		stmt.setInt(3, orderPrice);
+		System.out.println("[debug] stmt 확인 - > " + stmt);
+		
+		// 쿼리 실행
+		int insertRs = stmt.executeUpdate();
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
+		return insertRs;
+	}
+	
 	// (3) [회원 및 관리자] 나의 주문관리 목록 출력 코드
 	public ArrayList<OrderEbookMember> selectOrderListByMember(int memberNo, int beginRow, int row_per_page) throws ClassNotFoundException, SQLException {
 		// selectOrderListByMember메소드의 memberNo 입력값 확인
