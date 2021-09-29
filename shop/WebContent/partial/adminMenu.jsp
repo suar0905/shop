@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 관리자 페이지와 관련된 곳에 들어갈 메뉴 -->
-<div class="container-fluid">
+<div>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	<ul class="navbar-nav">
 		<!-- 회원 관리 : 회원목록 보기, 회원등급 수정, 회원비밀번호 수정, 회원강제 탈퇴 -->

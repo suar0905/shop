@@ -20,8 +20,14 @@
 <title>카테고리 추가 페이지</title>
 </head>
 <body>
+	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
 	<div>
+		<!-- 절대주소(기준점이 같음) -->
+		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
+	</div>
+	<!-- end : mainMenu include -->
 	
+	<div>
 	<%
 		// categoryNameCheck : 카테고리 이름 중복확인 값
 		String categoryNameCheck = "";
