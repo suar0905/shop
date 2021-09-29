@@ -79,8 +79,15 @@
 					<th>memberNo</th>
 					<th>createDate</th>
 					<th>updateDate</th>
-					<th>수정</th>
-					<th>삭제</th>
+					<%
+						// 로그인 하였고, 회원등급이 0초과일 때(관리자)
+						if(loginMember != null && loginMember.getMemberLevel() > 0) {
+					%>
+							<th>수정</th>
+							<th>삭제</th>
+					<% 		
+						}
+					%>
 				</tr>
 			</thead>
 			<tbody>
