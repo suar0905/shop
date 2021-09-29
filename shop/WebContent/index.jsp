@@ -26,6 +26,7 @@
 		<!-- request.getContextPath() : 실제로 프로젝트명이 변경되도 변경된 값을 가져온다. -->
 		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/loginForm.jsp">로그인</a></div>
 		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/insertMemberForm.jsp">회원가입</a></div>
+		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectNoticeOne.jsp">공지사항</a></div>
 	<% 
 		// 로그인 후(session 영역안에 값이 있으면)
 		} else{
@@ -45,7 +46,6 @@
 		}
 	%>
 	</div>
-	<!-- 상품 목록 출력 -->
 	<%
 		// 페이징
 		int currentPage = 1;
@@ -72,7 +72,29 @@
 		
 		// (4) Ebook 클래스 배열 객체 생성(신상품 목록 5개 출력)
 		ArrayList<Ebook> newEbookList = ebookDao.selectNewEbookList();
+		
+		// (5) NoticeDao 클래스 객체 생성
+		NoticeDao noticeDao = new NoticeDao();
+		
+		// (6) Notice 클래스 배열 객체 생성(최신 공지사항 5개 출력)
+		ArrayList<Notice> newNoticeList = noticeDao.selectNoticeListRecentDatePage();
 	%>
+	<br>
+	<!-- 공지사항 목록 -->
+	<h2>최신 공지사항 목록</h2>
+	<table border="1">
+		<%
+			for(Notice n : newNoticeList) {
+		%>
+				<td>
+					<div><a href="<%=request.getContextPath()%>/selectNoticeOne.jsp"><%=n.getNoticeNo()%>번 공지</a></div>
+					<div><%=n.getMemberNo()%>번 회원의</div>
+					<div>제목 : <%=n.getNoticeTitle()%></div>
+				</td>
+		<%		
+			}
+		%>
+	</table>
 	<br>
 	<!-- 신상품 목록 -->
 	<h2>신상품 목록</h2>

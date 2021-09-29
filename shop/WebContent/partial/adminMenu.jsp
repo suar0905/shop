@@ -36,6 +36,9 @@
 	    <li class="nav-item active">
 	      <a class="navbar-brand" href="<%=request.getContextPath()%>">[QnA게시판 관리]</a>
 	    </li>
+	    <li class="nav-item active">
+	      <a class="navbar-brand" href="<%=request.getContextPath()%>/selectNoticeOne.jsp">[공지사항]</a>
+	    </li>
 	 </ul>	
 	<a class="btn btn-outline-success" href="<%=request.getContextPath()%>/logOut.jsp">로그아웃</a>
 	</nav>
