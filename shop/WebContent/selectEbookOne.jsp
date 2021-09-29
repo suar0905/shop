@@ -136,13 +136,14 @@
 
 	<div class="jumbotron">
 		<!-- 해당 상품의 별점 평균 -->
-		<h2>* 구매 후기 *</h2>
 		<div>
 			<%
 				// (3) OrderCommentDao 클래스 객체 생성
 				OrderCommentDao orderCommentDao = new OrderCommentDao();
 				double avgScore = orderCommentDao.selectOrderScoreAvg(ebookNo);
+				int totalCount = orderCommentDao.totalOrderComment(ebookNo);
 			%>
+			<h2>* 총 <%=totalCount%>개의 구매 후기 *</h2>
 			<h3>별점 평균 : <%=avgScore%></h3>
 		</div>
 		<!-- 해당 상품의 후기 -->

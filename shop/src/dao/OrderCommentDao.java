@@ -11,6 +11,42 @@ import vo.OrderComment;
 
 public class OrderCommentDao {
 	
+	// (5) [비회원 및 회원 및 관리자] 해당 상품의 총 후기 개수 코드
+	public int totalOrderComment(int ebookNo) throws ClassNotFoundException, SQLException {
+		// selectOrderEbookComment메소드의 ebookNo 입력값 확인
+		System.out.println("[debug] ebookNo param 확인 -> " + ebookNo);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 :  order_comment 테이블에서 ebook_no가 ?(ebookNo)일때, 총 데이터 개수를 구하여라.
+		String sql = "SELECT COUNT(*) FROM order_comment WHERE ebook_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ebookNo);
+		System.out.println("[debug] stmt 확인 -> + " + stmt); // 디버깅 코드
+		
+		// 상품의 총 후기 코드 개수를 알 수 있는 변수
+		int totalCount = 0;
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		
+		if(rs.next()) {
+			totalCount = rs.getInt("count(*)");
+		}
+		System.out.println("[debug] totalCount 회원수 확인 -> " + totalCount);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return totalCount;
+	}
+	
 	// (4) [비회원 및 회원 및 관리자] 해당 상품의 후기를 검색하는 코드
 	public ArrayList<OrderComment> selectOrderEbookComment(int ebookNo, int beginRow, int row_per_page) throws ClassNotFoundException, SQLException {
 		// selectOrderEbookComment메소드의 ebookNo 입력값 확인
