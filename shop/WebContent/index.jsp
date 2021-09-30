@@ -45,7 +45,6 @@
 		<!-- request.getContextPath() : 실제로 프로젝트명이 변경되도 변경된 값을 가져온다. -->
 		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/loginForm.jsp">로그인</a></div>
 		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/insertMemberForm.jsp">회원가입</a></div>
-		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectNoticeOne.jsp">공지사항</a></div>
 	<% 
 		// 로그인 후(session 영역안에 값이 있으면)
 		} else{
@@ -105,8 +104,8 @@
 			for(Notice n : newNoticeList) {
 		%>
 				<td>
-					<div><a href="<%=request.getContextPath()%>/selectNoticeOne.jsp"><%=n.getNoticeNo()%>번 공지</a></div>
-					<div><%=n.getMemberNo()%>번 회원의</div>
+					<div><a href="<%=request.getContextPath()%>/selectNoticeOne.jsp">● <%=n.getNoticeNo()%>번 공지사항</a></div>
+					<div><%=n.getMemberNo()%>번 회원</div>
 					<div>제목 : <%=n.getNoticeTitle()%></div>
 				</td>
 		<%		

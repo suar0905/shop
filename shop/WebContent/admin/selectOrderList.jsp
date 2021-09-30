@@ -99,8 +99,8 @@
 				%>
 			</tbody>
 		</table>
-		<a href="">이전</a>
-		<a href="">다음</a>
+		<a href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=currentPage-1%>">이전</a>
+		<a href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=currentPage+1%>">다음</a>
 	</div>
 </body>
 </html>
