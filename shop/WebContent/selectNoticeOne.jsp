@@ -59,65 +59,65 @@
 	}
 %>
 	<div class="jumbotron">
-	<h1>* 공지사항 *</h1>
-		<%
-			// 로그인 하였고, 회원등급이 0초과일 때(관리자)
-			if(loginMember != null && loginMember.getMemberLevel() > 0) {
-		%>
-				<div>
-					<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/insertNoticeForm.jsp">추가하기</a>
-				</div>
-		<% 		
-			}
-		%>
-		<table class="table table-secondary table-bordered" border="1">
-			<thead>
-				<tr>
-					<th>noticeNo</th>
-					<th>noticeTitle</th>
-					<th>noticeContent</th>
-					<th>memberNo</th>
-					<th>createDate</th>
-					<th>updateDate</th>
+		<h1>* 공지사항 게시판 *</h1>
+			<%
+				// 로그인 하였고, 회원등급이 0초과일 때(관리자)
+				if(loginMember != null && loginMember.getMemberLevel() > 0) {
+			%>
+					<div>
+						<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/insertNoticeForm.jsp">추가하기</a>
+					</div>
+			<% 		
+				}
+			%>
+			<table class="table table-secondary table-bordered" border="1">
+				<thead>
+					<tr>
+						<th>noticeNo</th>
+						<th>noticeTitle</th>
+						<th>noticeContent</th>
+						<th>memberNo</th>
+						<th>createDate</th>
+						<th>updateDate</th>
+						<%
+							// 로그인 하였고, 회원등급이 0초과일 때(관리자)
+							if(loginMember != null && loginMember.getMemberLevel() > 0) {
+						%>
+								<th>수정</th>
+								<th>삭제</th>
+						<% 		
+							}
+						%>
+					</tr>
+				</thead>
+				<tbody>
 					<%
-						// 로그인 하였고, 회원등급이 0초과일 때(관리자)
-						if(loginMember != null && loginMember.getMemberLevel() > 0) {
+						for(Notice n : list) {
 					%>
-							<th>수정</th>
-							<th>삭제</th>
+							<tr>
+								<td><%=n.getNoticeNo()%></td>
+								<td><%=n.getNoticeTitle()%></td>
+								<td><%=n.getNoticeContent()%></td>
+								<td><%=n.getMemberNo()%></td>
+								<td><%=n.getCreateDate()%></td>
+								<td><%=n.getUpdateDate()%></td>
+								<%
+									// 로그인 하였고, 회원등급이 0초과일 때(관리자)
+									if(loginMember != null && loginMember.getMemberLevel() > 0) {
+								%>
+										<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>">수정하기</a></td>
+										<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/deleteNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>&noticeTitle=<%=n.getNoticeTitle()%>&noticeContent=<%=n.getNoticeContent()%>&memberNo=<%=n.getMemberNo()%>">삭제하기</a></td>
+								<% 		
+									}
+								%>
+							</tr>
 					<% 		
 						}
 					%>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-					for(Notice n : list) {
-				%>
-						<tr>
-							<td><%=n.getNoticeNo()%></td>
-							<td><%=n.getNoticeTitle()%></td>
-							<td><%=n.getNoticeContent()%></td>
-							<td><%=n.getMemberNo()%></td>
-							<td><%=n.getCreateDate()%></td>
-							<td><%=n.getUpdateDate()%></td>
-							<%
-								// 로그인 하였고, 회원등급이 0초과일 때(관리자)
-								if(loginMember != null && loginMember.getMemberLevel() > 0) {
-							%>
-									<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>">수정하기</a></td>
-									<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/deleteNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>&noticeTitle=<%=n.getNoticeTitle()%>&noticeContent=<%=n.getNoticeContent()%>&memberNo=<%=n.getMemberNo()%>">삭제하기</a></td>
-							<% 		
-								}
-							%>
-						</tr>
-				<% 		
-					}
-				%>
-			</tbody>			
-		</table>
-		<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectNoticeOne.jsp?currentPage=<%=currentPage-1%>">[이전]</a>
-		<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectNoticeOne.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
+				</tbody>			
+			</table>
+			<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectNoticeOne.jsp?currentPage=<%=currentPage-1%>">[이전]</a>
+			<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectNoticeOne.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
 	</div>
 	
 </body>

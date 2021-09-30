@@ -50,17 +50,18 @@
 	<!-- end : mainMenu include -->
 	
 	<div class="jumbotron">
+	<h2>전자책 가격수정</h2>
 	<form action="<%=request.getContextPath()%>/admin/updateEbookPriceAction.jsp" method="post">
 		<div>
-			전자책 가격 수정할 번호 :
+			수정할 전자책 번호 :
 			<input class="btn btn-outline-dark" type="text" name="ebookNo" value="<%=ebookNo%>" readonly="readonly">
 		</div>
 		<div>
-			전자책 현재 가격 :
+			현재 전자책 가격 :
 			<input class="btn btn-outline-dark" type="text" value="<%=ebookPrice%>" readonly="readonly">
 		</div>
 		<div>
-			전자책 수정할 가격 :
+			수정할 전자책 가격 :
 			<input class="btn btn-outline-dark" type="text" name="ebookNewPrice" placeholder="Enter ebookNewPrice">
 		</div>
 		<div>
