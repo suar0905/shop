@@ -18,7 +18,7 @@
 	
 	// (1) MemberDao 객체 생성
 	MemberDao memberDao = new MemberDao();
-	String result = memberDao.selectMemberId(memberIdCheck); 
+	String result = memberDao.selectMemberIdCheck(memberIdCheck); 
 	// 디버깅 코드
 	System.out.println("[debug] result 확인 -> " + result);
 	

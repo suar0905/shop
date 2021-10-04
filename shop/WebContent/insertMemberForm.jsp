@@ -1,96 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	// * 인증 방어 코드 * 
-	// 로그인 전(session.getAttribute("loginMember") -> null)에만 페이지 열람 가능하다.
-	if(session.getAttribute("loginMember") != null){
-		System.out.println("[debug] 이미 로그인 되어 있습니다.");
-		// 상대주소 표기
+	// 한글 깨짐 방지
+	request.setCharacterEncoding("utf-8");
+	// 인증 방어코드(로그인 전에만 열람 가능할 수 있도록)
+	if(session.getAttribute("loginMember") != null) {
+		System.out.println("[debug] 이미 로그인 되어있습니다.");
 		response.sendRedirect(request.getContextPath() + "/index.jsp");
-		return; // 메소드를 종료시켜라.
+		return;
+	}
+	
+	// memberIdCheck : memberId 중복 여부 확인 변수
+	String memberIdCheck = "";
+	if(request.getParameter("memberIdCheck") != null) {
+		memberIdCheck = request.getParameter("memberIdCheck");
 	}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+<title>회원가입 페이지</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- jQuery 사용 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="container">
-		<h1 class="alert alert-info">회원가입 페이지</h1>
+	<!-- 페이지 상단부분에 patial 폴더안의 mainMenu 내용 포함시키기 -->
+	<div>
+		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
+	</div>
+	
+	<div class="jumbotron">
+		<h2>* 회원가입 페이지 *</h2>
 		
-		<%
-			// memberIdCheck : 아이디 확인 값
-			String memberIdCheck = "";
-			if(request.getParameter("memberIdCheck") != null) {
-				memberIdCheck = request.getParameter("memberIdCheck");
-			}
-		
-		%>
-		
-		<!-- selectMemberIdCheckAction에서 idCheckResult값 가져옴 -->
-		<div><input type="hidden" value="<%=request.getParameter("idCheckResult")%>"></div>
-		
-		<!-- 아이디(memberId)를 사용가능한지 확인하는 폼 -->
-		<form class="talbe table-info table-striped" action="<%=request.getContextPath()%>/selectMemberIdCheckAction.jsp" method="post">
+		<!-- 아이디(memberId) 중복 여부 확인하는 폼 -->
+		<form action="<%=request.getContextPath()%>/selectMemberIdCheckAction.jsp" method="post">
 			<div>
 				중복아이디 검사 :
-				<input type="text" name="memberIdCheck">
-				<input class="btn btn-dark" type="submit" value="중복아이디 검사">
+				<input type="text" name="memberIdCheck" placeholder="Enter Id">
+				<input type="submit" value="중복아이디 검사">
+				<input type="hidden" value="<%=request.getParameter("existId")%>">
 			</div>
 		</form>
 		
-		<!-- 회원가입을 할 때 사용하는 폼 -->
-		<form id="joinForm" class="talbe table-info table-striped" action="<%=request.getContextPath()%>/insertMemberAction.jsp" method="post">
-			<table border="">
-				<!-- memberId -->
+		<!-- 회원 가입 폼 -->
+		<form id="joinForm" action="<%=request.getContextPath()%>/insertMemberAction.jsp" method="post">
+			<table class="table table-secondary table-bordered">
 				<tr>
-					<th>아이디 : </th>
-					<td><input type="text" id="memberId" name="memberId" readonly="readonly" value=<%=memberIdCheck%>></td>
+					<th>회원 아이디</th>
+					<td><input class="btn btn-outline-secondary" type="text" id="memberId" name="memberId" value="<%=memberIdCheck%>" readonly="readonly" placeholder="Enter CheckId"></td>
 				</tr>
-				<!-- memberPw -->
 				<tr>
-					<th>비밀번호 : </th>
-					<td><input type="password" id="memberPw" name="memberPw" value=""></td>
+					<th>회원 비밀번호</th>
+					<td><input class="btn btn-outline-secondary" type="password" id="memberPw" name="memberPw" placeholder="Enter Pw"></td>
 				</tr>
-				<!-- memberLevel -->
 				<tr>
-					<th>회원등급 : </th>
+					<th>회원등급</th>
 					<td><input type="text" id="memberLevel" name="memberLevel" value="0" readonly="readonly"></td>
 				</tr>
-				<!-- memberName -->
 				<tr>
-					<th>이름 : </th>
-					<td><input type="text" id="memberName" name="memberName" value=""></td>
+					<th>회원 이름</th>
+					<td><input class="btn btn-outline-secondary" type="text" id="memberName" name="memberName" placeholder="Enter Name"></td>
 				</tr>
-				<!-- memberAge -->
 				<tr>
-					<th>나이 : </th>
-					<td><input type="text" id="memberAge" name="memberAge" value=""></td>
+					<th>회원 나이</th>
+					<td><input class="btn btn-outline-secondary" type="text" id="memberAge" name="memberAge" placeholder="Enter Age"></td>
 				</tr>
-				<!-- memberGender -->
 				<tr>
-					<th>성별 : </th>
-					<td>
-						<input type="radio" class="memberGender" name="memberGender" value="남">남 
+					<th>회원 성별</th> 
+					<td>	
+						<input type="radio" class="memberGender" name="memberGender" value="남">남
 						<input type="radio" class="memberGender" name="memberGender" value="여">여
-					</td>
-				</tr>			
-			</table>		
+					</td>	
+				</tr>
+			</table>	
 			<br>
-			<div>
-				<input class="btn btn-dark" id="btn" type="button" value="회원가입하기">
-				<input class="btn btn-dark" type="reset" value="초기화">
-				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
-			</div>
+				<div>
+					<input class="btn btn-dark" type="button" id="insertBtn" value="회원가입">
+					<input class="btn btn-dark" type="reset" value="초기화">
+					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
 		</form>
 	</div>
 	
 	<script>
 		// 회원가입 폼 유효성 검사
-		$('#btn').click(function() {
+		$('#insertBtn').click(function() {
 			if($('#memberId').val() == '') {
 				alert('memberId를 입력하세요');
 				return;

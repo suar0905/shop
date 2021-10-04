@@ -1,51 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	// 한글 깨짐 방지
+	//한글 깨짐 방지
 	request.setCharacterEncoding("utf-8");
-	
-	// * 인증 방어 코드 * 
-	// 로그인 전(session.getAttribute("loginMember") -> null)에만 페이지 열람 가능하다.
-	if(session.getAttribute("loginMember") != null){
-		System.out.println("[debug] 이미 로그인 되어 있습니다.");
-		// 상대주소 표기
-		response.sendRedirect(request.getContextPath() + "/index.jsp");
-		return; // 메소드를 종료시켜라.
-	}	
-%>
 
+	// 인증 방어코드(로그인 전에만 열람 가능할 수 있도록)
+	if(session.getAttribute("loginMember") != null) {
+		System.out.println("[debug] 이미 로그인 되어있습니다.");
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
+		return;
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- jQuery 사용 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- bootstrap 사용 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-	<!-- start : submenu include - submenu.jsp의 내용을 가져온다. -->
+	<!-- 페이지 상단부분에 patial 폴더안의 mainMenu 내용 포함시키기 -->
 	<div>
-		<!-- 절대주소(기준점이 같음) -->
 		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
 	</div>
-	<!-- end : submenu include -->
-	
+
 	<div class="jumbotron">
-	<h1>로그인 페이지</h1>
+		<h1>* 로그인 페이지 *</h1>
 		<form id="loginForm" action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
-			<table>
-				<tr>
-					<th>아이디 : </th>
-					<td><input class="btn btn-outline-secondary" type="text" id="memberId" name="memberId" placeholder="Enter Id" value=""></td>
-				</tr>
-				<tr>
-					<th>비밀번호 : </th>
-					<td><input class="btn btn-outline-secondary" type="password" id="memberPw" name="memberPw" placeholder="Enter Pw" value=""></td>
-				</tr>
-			</table>
+			<div>
+				회원 아이디 : 
+				<input class="btn btn-outline-secondary" type="text" name="memberId" placeholder="memberId 입력">
+			</div>
+			<div>
+				회원 비밀번호 : 
+				<input class="btn btn-outline-secondary" type="password" name="memberPw" placeholder="memberPw 입력">
+			</div>
 			<br>
-			<input class="btn btn-dark" id="loginBtn" type="button" value="로그인" >
-			<input class="btn btn-dark" type="reset" value="초기화">
-			<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+			<div>
+				<input class="btn btn-dark" type="button" id="loginBtn" value="로그인">
+				<input class="btn btn-dark" type="reset" value="초기화">
+				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+			</div>
 		</form>
 	</div>
 	
