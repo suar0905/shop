@@ -64,8 +64,8 @@
 			<%
 				// 로그인 한사람만 가능하도록(회원 및 관리자)
 				if(loginMember != null) {
-			%>
-					<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/insertQnaForm.jsp">QnA 추가하기</a>
+			%> 
+					<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/insertQnaForm.jsp?memberNo=<%=loginMember.getMemberNo()%>">QnA 추가하기</a>
 			<% 		
 				}
 			%>

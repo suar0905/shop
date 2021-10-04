@@ -11,6 +11,51 @@ import vo.Qna;
 
 public class QnaDao {
 	
+	// (3) [회원 및 관리자] QnA 게시물 추가하기 코드
+	public int insertQna(Qna qna, int memberNo) throws ClassNotFoundException, SQLException {
+		// insertQna메소드의 qnaCategory 입력값 확인
+		System.out.println("[debug] qnaCategory param 확인 -> " + qna.getQnaCategory());
+		// insertQna메소드의 qnaTitle 입력값 확인
+		System.out.println("[debug] qnaTitle param 확인 -> " + qna.getQnaTitle());
+		// insertQna메소드의 qnaContent 입력값 확인
+		System.out.println("[debug] qnaContent param 확인 -> " + qna.getQnaContent());
+		// insertQna메소드의 qnaSecret 입력값 확인
+		System.out.println("[debug] qnaSecret param 확인 -> " + qna.getQnaSecret());
+		// insertQna메소드의 memberNo 입력값 확인
+		System.out.println("[debug] memberNo 값 확인 -> " + memberNo);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); 
+		
+		// 쿼리 생성
+		// 쿼리문 : qna 테이블에서 member_no가 ?(memberNo)일때, qna_category, qna_title, qna_content, qna_secret, member_no, create_date, update_date 항목에다 ?(qna.getQnaCategory()),?(qna.getQnaTitle()),?(qna.getQnaContent()),?(qna.getQnaSecret()),NOW(),NOW()값을 추가하여라.
+		String sql = "INSERT INTO qna(qna_category, qna_title, qna_content, qna_secret, member_no, create_date, update_date) VALUES(?,?,?,?,?,NOW(),NOW())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, qna.getQnaCategory());
+		stmt.setString(2, qna.getQnaTitle());
+		stmt.setString(3, qna.getQnaContent());
+		stmt.setString(4, qna.getQnaSecret());
+		stmt.setInt(5, memberNo);
+		System.out.println("[debug] stmt 확인 -> + " + stmt);
+		
+		// 쿼리 실행
+		int insertRs = stmt.executeUpdate();
+		
+		if(insertRs == 1) {
+			System.out.println("[debug] 입력 성공");
+		} else {
+			System.out.println("[debug] 입력 실패");
+		}
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
+		return insertRs;
+	}
+	
 	// (2) [비회원 및 회원 및 관리자] QnA 상세보기 코드(qnaNo값 이용)
 	public Qna selectQnaListByAllPage(int qnaNo) throws ClassNotFoundException, SQLException {
 		// selectQnaListByAllPage메소드의 qnaNo 입력값 확인
