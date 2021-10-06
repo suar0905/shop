@@ -101,7 +101,19 @@
 			// ((로그인 정보가 있고(회원), 로그인한 회원번호와 qna 게시글의 회원번호가 일치하고, qnaSecret값이 개방글(Y)) 이거나 ((로그인 정보가 있고(회원), 로그인한 회원번호와 qna 게시글의 회원번호가 일치하고, qnaSecret값이 개방글(N)) 이거나 ((로그인 정보가 있고(회원), 회원등급이 0보다 클때) 
 			if((loginMember != null && loginMember.getMemberNo() == qna.getMemberNo() && qna.getQnaSecret().equals("Y")) || (loginMember != null && loginMember.getMemberNo() == qna.getMemberNo() && qna.getQnaSecret().equals("N")) || (loginMember != null && loginMember.getMemberLevel() > 0)) {
 		%>
-				<h1><%=qna.getMemberNo()%>번 회원의 QnA 상세보기</h1>
+				<h1><%=qna.getMemberNo()%>번 회원의 QnA 게시글 상세보기</h1>
+				<%
+					// 로그인 한사람만 가능하도록(회원 및 관리자)
+					if(loginMember != null) {
+				%>
+						<div>
+							<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/updateQnaForm.jsp?qnaNo=<%=qna.getQnaNo()%>&memberNo=<%=qna.getMemberNo()%>">수정하기</a>
+							<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/deleteQnaForm.jsp?qnaNo=<%=qna.getQnaNo()%>&memberNo=<%=qna.getMemberNo()%>">삭제하기</a>
+							<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/selectQnaList.jsp">뒤로가기</a>
+						</div>
+				<% 		
+					} 
+				%>
 				<table class="table table-secondary table-bordered" border="1">
 					<tr>
 						<th>qnaNo</th>
@@ -134,7 +146,7 @@
 				</table>
 				
 				<p><h1>QnA 댓글 관리</h1>
-				<!-- 댓글 부분 -->
+				<!-- 댓글 입력 부분 -->
 				<h2>댓글 입력</h2>
 				<div>
 					<form id="insertComment" action="<%=request.getContextPath()%>/insertCommentAction.jsp" method="post">
@@ -169,6 +181,7 @@
 			} else if((loginMember == null && qna.getQnaSecret().equals("Y")) || (loginMember != null && qna.getQnaSecret().equals("Y"))) {
 		%>
 				<h1><%=qna.getMemberNo()%>번 회원의 QnA 상세보기</h1>
+				<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/selectQnaList.jsp">뒤로가기</a>
 				<table class="table table-secondary table-bordered" border="1">
 					<tr>
 						<th>qnaNo</th>
@@ -199,8 +212,33 @@
 						<td><%=qna.getUpdateDate()%></td>
 					</tr>	
 				</table>
+				
+				<p><h1>QnA 댓글 관리</h1>
+				<!-- 댓글 목록 출력, 10개씩 페이징 -->
+				<h2>댓글 목록</h2>
+					<% 
+						for(QnaComment qc : qcList) {
+					%>
+							<div class="bg-dark text-white">
+								<%=qc.getQnaCommentContent()%> 
+								<a href="<%=request.getContextPath()%>/deleteCommentAction.jsp?qnaCommentNo=<%=qc.getQnaCommentNo()%>&qnaNo=<%=qnaNo%>" class="btn-secondary">삭제</a>
+							</div>
+					<%	
+						}
+					%>
+					<div>
+						<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaOne.jsp?commentCurrentPage=<%=commentCurrentPage-1%>">[이전]</a>
+						<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaOne.jsp?commentCurrentPage=<%=commentCurrentPage+1%>">[다음]</a>
+					</div>
 		<% 	 
-			} 
+			} else {
+		%>
+				<div>
+					비밀글입니다. 뒤로 돌아가주세요
+					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+		<% 		
+			}
 		%>
 	</div>
 </body>

@@ -7,9 +7,91 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import commons.ConnUtil;
+import vo.Member;
 import vo.Qna;
 
 public class QnaDao {
+	
+	// (5) [회원 및 관리자] QnA 게시물 삭제하기 코드
+	public int deleteQna(int qnaNo) throws ClassNotFoundException, SQLException {
+		// deleteQna메소드의 qnaNo 입력값 확인
+		System.out.println("[debug] qnaNo 값 확인 -> " + qnaNo);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); 
+		
+		// 쿼리 생성
+		// 쿼리문 : qna 테이블에서 qna_no가 ?(qnaNo)일때 해당 데이터를 삭제하여라.
+		String sql = "DELETE FROM qna WHERE qna_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, qnaNo);
+		System.out.println("[debug] stmt 확인 -> + " + stmt);
+		
+		// 쿼리 실행
+		int deleteRs = stmt.executeUpdate();
+		
+		if(deleteRs == 1) {
+			System.out.println("[debug] 삭제 성공");
+		} else {
+			System.out.println("[debug] 삭제 실패");
+		}
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
+		return deleteRs;
+	}
+	
+	// (4) [회원 및 관리자] QnA 게시물 수정하기 코드(회원은 로그인한 memberNo와 수정할 qna게시글의 memberNo가 같아야함)
+	public int updateQna(Qna qna, int qnaNo, int checkMemberNo) throws ClassNotFoundException, SQLException {
+		// updateQna메소드의 qnaCategory 입력값 확인
+		System.out.println("[debug] qnaCategory param 확인 -> " + qna.getQnaCategory());
+		// updateQna메소드의 qnaSecret 입력값 확인
+		System.out.println("[debug] qnaSecret param 확인 -> " + qna.getQnaSecret());
+		// updateQna메소드의 qnaTitle 입력값 확인
+		System.out.println("[debug] qnaTitle param 확인 -> " + qna.getQnaTitle());
+		// updateQna메소드의 qnaContent 입력값 확인
+		System.out.println("[debug] qnaContent param 확인 -> " + qna.getQnaContent());
+		// updateQna메소드의 qnaNo 입력값 확인
+		System.out.println("[debug] qnaNo 값 확인 -> " + qnaNo);
+		// updateQna메소드의 checkMemberNo 입력값 확인
+		System.out.println("[debug] memberNo 값 확인 -> " + checkMemberNo);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); 
+		
+		// 쿼리 생성
+		// 쿼리문 : qna 테이블에서 qna_no가 ?(qnaNo)이고, member_no가 ?(checkMemberNo)일때, qnaCategory, qnaSecret, qnaTitle, qnaContent, createDate, updateDate를 각각 ?,?,?,?,NOW(),NOW()로 수정하여라.
+		String sql = "UPDATE qna Set qna_category=?, qna_secret=?, qna_title=?, qna_content=?, create_date=NOW(), update_date=NOW() WHERE qna_no=? AND member_no=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, qna.getQnaCategory());
+		stmt.setString(2, qna.getQnaSecret());
+		stmt.setString(3, qna.getQnaTitle());
+		stmt.setString(4, qna.getQnaContent());
+		stmt.setInt(5, qnaNo);
+		stmt.setInt(6, checkMemberNo);
+		System.out.println("[debug] stmt 확인 -> + " + stmt);
+		
+		// 쿼리 실행
+		int updateRs = stmt.executeUpdate();
+		
+		if(updateRs == 1) {
+			System.out.println("[debug] 수정 성공");
+		} else {
+			System.out.println("[debug] 수정 실패");
+		}
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
+		return updateRs;
+	}
 	
 	// (3) [회원 및 관리자] QnA 게시물 추가하기 코드
 	public int insertQna(Qna qna, int memberNo) throws ClassNotFoundException, SQLException {

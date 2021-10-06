@@ -5,7 +5,7 @@
 <%
 	// 한글 깨짐 방지
 	request.setCharacterEncoding("utf-8");
-	
+
 	// 페이징
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null) {
@@ -99,7 +99,6 @@
 								<% 		
 									}
 								%>
-							
 							</tr>
 					<% 		
 						}
