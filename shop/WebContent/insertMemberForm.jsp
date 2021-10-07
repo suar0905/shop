@@ -55,7 +55,7 @@
 				</tr>
 				<tr>
 					<th>회원등급</th>
-					<td><input type="text" id="memberLevel" name="memberLevel" value="0" readonly="readonly"></td>
+					<td><input class="btn btn-outline-secondary" type="text" id="memberLevel" name="memberLevel" value="0" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th>회원 이름</th>

@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="vo.*"%>
 <%
 	//한글 깨짐 방지
 	request.setCharacterEncoding("utf-8");
 
 	// 인증 방어코드(로그인 전에만 열람 가능할 수 있도록)
-	if(session.getAttribute("loginMember") != null) {
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	if(loginMember != null) {
 		System.out.println("[debug] 이미 로그인 되어있습니다.");
 		response.sendRedirect(request.getContextPath() + "/index.jsp");
 		return;
-	}
+	} 
 %>
 <!DOCTYPE html>
 <html>

@@ -48,12 +48,29 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
-	<div>
-		<!-- 절대주소(기준점이 같음) -->
-		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
-	</div>
-	<!-- end : mainMenu include -->
+	<%
+		// 로그인 하지 못했거나(비회원), 회원등급이 1미만일 때(회원) 
+		if(loginMember == null || loginMember.getMemberLevel() < 1) {
+	%>
+			<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
+			<div>
+				<!-- 절대주소(기준점이 같음) -->
+				<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
+			</div>
+			<!-- end : mainMenu include -->
+	<% 		
+		// 로그인 하였고, 회원등급이 0초과일 때(관리자)
+		} else if(loginMember != null && loginMember.getMemberLevel() > 0) {
+	%>
+			<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
+			<div>
+			<!-- 절대주소(기준점이 같음) -->
+				<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
+			</div>
+			<!-- end : mainMenu include -->
+	<% 		
+		}
+	%>
 	
 	<div class="jumbotron">
 		<h1>나의 주문목록 페이지</h1>

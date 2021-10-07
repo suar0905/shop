@@ -61,7 +61,6 @@
 		<h3>정말로 <%=noticeNo%>번 공지를 삭제하시겠습니까?</h3>
 		<div>
 			<input class="btn btn-dark" id="deleteBtn" type="button" value="삭제하기">
-			<input class="btn btn-dark" type="reset" value="초기화">
 			<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
 		</div>
 	</form>
