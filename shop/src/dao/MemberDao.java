@@ -19,7 +19,7 @@ public class MemberDao {
 		
 		// 쿼리 생성
 		// 쿼리문 : member 테이블에서 member_no가 ?(memberNo)일때, create_date 값을 내림차순으로 memberNo, memberId, memberLevel, memberAge, memberGender, updateDate, createDate 항목을 조회하여라.
-		String sql = "SELECT member_no memberNo, member_id memberId, member_level memberLevel, member_name memberName, member_age memberAge, member_gender memberGender, update_date updateDate, create_date createDate FROM member WHERE member_no=? ORDER BY create_date DESC";
+		String sql = "SELECT member_no memberNo, member_id memberId, member_pw memberPw, member_level memberLevel, member_name memberName, member_age memberAge, member_gender memberGender, update_date updateDate, create_date createDate FROM member WHERE member_no=? ORDER BY create_date DESC";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, memberNo);
 		System.out.println("[debug] stmt 확인 -> " + stmt);
@@ -35,6 +35,7 @@ public class MemberDao {
 			Member returnMember = new Member();
 			returnMember.setMemberNo(rs.getInt("memberNo"));
 			returnMember.setMemberId(rs.getString("memberId"));
+			returnMember.setMemberPw(rs.getString("memberPw"));
 			returnMember.setMemberLevel(rs.getInt("memberLevel"));
 			returnMember.setMemberName(rs.getString("memberName"));
 			returnMember.setMemberAge(rs.getInt("memberAge"));
