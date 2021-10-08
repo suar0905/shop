@@ -7,11 +7,131 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import commons.ConnUtil;
+import vo.Ebook;
 import vo.Member;
 import vo.Notice;
 import vo.Qna;
 
 public class QnaDao {
+	
+	// (9) [비회원 및 회원 및 관리자] qnaCategory으로 검색된 qna 목록 출력 코드
+	public ArrayList<Qna> selectQnaListByCategory(String qnaCategory, int beginRow, int rowPerPage) throws ClassNotFoundException, SQLException {
+		// selectQnaListByCategory메소드의 qnaCategory 입력값 확인
+		System.out.println("[debug] qnaCategory param 확인 -> " + qnaCategory);
+		// selectQnaListByCategory메소드의 beginRow 입력값 확인
+		System.out.println("[debug] beginRow param 확인 -> " + beginRow);
+		// selectQnaListByCategory메소드의 rowPerPage 입력값 확인
+		System.out.println("[debug] rowPerPage param 확인 -> " + rowPerPage);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성 
+		// 쿼리문 : qna테이블에서 qna_category가 ?(qnaCategory)일때, create_date를 내림차순으로 ?(beginRow)부터 ?(rowPerPage)까지 qnaNo, qnaCategory, qnaTitle, qnaSecret, memberNo, crateDate, updateDate항목을 조회하여라.
+		String sql = "SELECT qna_no qnaNo, qna_category qnaCategory, qna_title qnaTitle, qna_content qnaContent, qna_secret qnaSecret, member_no memberNo, create_date createDate, update_date updateDate FROM qna WHERE qna_category=? ORDER BY create_date DESC LIMIT ?,?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 - > " + stmt);
+		stmt.setString(1, qnaCategory);
+		stmt.setInt(2, beginRow);
+		stmt.setInt(3, rowPerPage);
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		
+		// 9.1) Qna 클래스 배열 객체 생성
+		ArrayList<Qna> list = new ArrayList<Qna>();
+		while(rs.next()) {
+			// 9.2) Qna 클래스 객체 생성
+			Qna returnQna = new Qna();
+			returnQna.setQnaNo(rs.getInt("qnaNo"));
+			returnQna.setQnaCategory(rs.getString("qnaCategory"));
+			returnQna.setQnaTitle(rs.getString("qnaTitle"));
+			returnQna.setQnaContent(rs.getString("qnaContent"));
+			returnQna.setQnaSecret(rs.getString("qnaSecret"));
+			returnQna.setMemberNo(rs.getInt("memberNo"));
+			returnQna.setCreateDate(rs.getString("createDate"));
+			returnQna.setUpdateDate(rs.getString("updateDate"));
+
+			list.add(returnQna);
+		}
+		System.out.println("[debug] list 확인 - > " + list);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+	
+		return list;
+	}
+	
+	// (8) [비회원 및 회원 및 관리자] 검색된(qnaCategory) Qna 총 게시글 수 코드 
+	public int selectTotalQnaCount(String qnaCategory) throws ClassNotFoundException, SQLException {
+		// selectTotalQnaCount메소드의 qnaCategory 입력값 확인
+		System.out.println("[debug] qnaCategory param 확인 -> " + qnaCategory);
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : qna테이블에서 qna_category가 ?(qnaCategory)일때, 총 데이터 수를 조회하여라.
+		String sql = "SELECT count(*) FROM qna WHERE qna_category=?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, qnaCategory);
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		
+		//  qnaCategory으로 검색된 총 데이터 개수 변수
+		int searchTotalCount = 0;
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			searchTotalCount = rs.getInt("count(*)");
+		}
+		System.out.println("[debug] searchTotalCount 확인 -> " + searchTotalCount);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return searchTotalCount;
+	}
+	
+	// (7) [비회원 및 회원 및 관리자] Qna 게시글 총 데이터 코드
+	public int totalQnaCount() throws ClassNotFoundException, SQLException {
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : qna테이블의 총 데이터 수를 조회하여라.
+		String sql = "SELECT count(*) FROM qna";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		
+		// 총 데이터 개수 변수
+		int totalCount = 0;
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			totalCount = rs.getInt("count(*)");
+		}
+		System.out.println("[debug] totalCount 확인 -> " + totalCount);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return totalCount;
+	}
+		
 	// (6) [비회원 및 회원 및 관리자] 최근 QnA 개방글 게시물 5개 보기 코드
 	public ArrayList<Qna> selectQnaListRecentDatePage() throws ClassNotFoundException, SQLException {
 		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
@@ -20,7 +140,7 @@ public class QnaDao {
 		System.out.println("[debug] conn 확인 -> + " + conn); 
 		
 		// 쿼리 생성
-		// 쿼리문 : qna 테이블에서 qna_secret이 Y일때, create_date 값을 내림차순으로 0부터 4까지, qnaNo, qnaCategory, qnaTitle, qnaSecret 항목의 값들을 조회하여라.
+		// 쿼리문 : qna 테이블에서 qna_secret이 Y일때, create_date 값을 내림차순으로 0부터 4까지, qnaNo, qnaCategory, qnaTitle, qnaSecret, memberNo, crateDate, updateDate 항목의 값들을 조회하여라.
 		String sql = "SELECT qna_no qnaNo, qna_category qnaCategory, qna_title qnaTitle, qna_content qnaContent, qna_secret qnaSecret, member_no memberNo, create_date createDate, update_date updateDate FROM qna WHERE qna_secret='Y' ORDER BY create_date DESC LIMIT 0,5";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		System.out.println("[debug] stmt 확인 -> + " + stmt);
@@ -28,11 +148,11 @@ public class QnaDao {
 		// 쿼리 실행
 		ResultSet rs = stmt.executeQuery();
 		
-		// 1.1) Qna 클래스 배열 객체 생성
+		// 6.1) Qna 클래스 배열 객체 생성
 		ArrayList<Qna> list = new ArrayList<Qna>();
 		
 		while(rs.next()) {
-			// 1.2) Qna 클래스 객체 생성(쿼리 실행 값들 저장)
+			// 6.2) Qna 클래스 객체 생성(쿼리 실행 값들 저장)
 			Qna qna = new Qna();
 			qna.setQnaNo(rs.getInt("qnaNo"));
 			qna.setQnaCategory(rs.getString("qnaCategory"));

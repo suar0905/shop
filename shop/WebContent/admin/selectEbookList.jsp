@@ -160,40 +160,41 @@
 		</tbody>
 	</table>
 	</form>
-	
-	<%
-		// (1)에서 생성한 loginMember변수 사용
-		// [처음으로(<<)] 버튼
-	%>
-		<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=1&categoryName=<%=categoryName%>">[처음으로]</a>
-	<%
-		// [이전(<)] 버튼
-		// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
-		if(startPage > displayPage) {
-	%>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=startPage-displayPage%>&categoryName=<%=categoryName%>">[이전]</a>
-	<% 		
-		}
-	
-		// 페이지 번호[1,2,3..9] 버튼
-		for(int i=startPage; i<=endPage; i++) {
-			System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
-	%>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=i%>&categoryName=<%=categoryName%>">[<%=i%>]</a>
-	<% 		
-		}
+		<div class="text-center">
+		<%
+			// (1)에서 생성한 loginMember변수 사용
+			// [처음으로(<<)] 버튼
+		%>
+			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=1&categoryName=<%=categoryName%>">[처음으로]</a>
+		<%
+			// [이전(<)] 버튼
+			// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
+			if(startPage > displayPage) {
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=startPage-displayPage%>&categoryName=<%=categoryName%>">[이전]</a>
+		<% 		
+			}
 		
-		// [다음(>)] 버튼
-		// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
-		if(endPage < lastPage) {
-	%>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=currentPage+1%>&categoryName=<%=categoryName%>">[다음]</a>
-	<% 		
-		}
-		
-		// [끝으로(>>)] 버튼
-	%>	
-		<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=lastPage%>&categoryName=<%=categoryName%>">[끝으로]</a>
+			// 페이지 번호[1,2,3..9] 버튼
+			for(int i=startPage; i<=endPage; i++) {
+				System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=i%>&categoryName=<%=categoryName%>">[<%=i%>]</a>
+		<% 		
+			}
+			
+			// [다음(>)] 버튼
+			// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
+			if(endPage < lastPage) {
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=currentPage+1%>&categoryName=<%=categoryName%>">[다음]</a>
+		<% 		
+			}
+			
+			// [끝으로(>>)] 버튼
+		%>	
+			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=lastPage%>&categoryName=<%=categoryName%>">[끝으로]</a>
+		</div>	
 	</div>
 </body>
 </html>
