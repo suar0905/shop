@@ -8,9 +8,52 @@ import java.util.ArrayList;
 
 import commons.ConnUtil;
 import vo.Member;
+import vo.Notice;
 import vo.Qna;
 
 public class QnaDao {
+	// (6) [비회원 및 회원 및 관리자] 최근 QnA 개방글 게시물 5개 보기 코드
+	public ArrayList<Qna> selectQnaListRecentDatePage() throws ClassNotFoundException, SQLException {
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); 
+		
+		// 쿼리 생성
+		// 쿼리문 : qna 테이블에서 qna_secret이 Y일때, create_date 값을 내림차순으로 0부터 4까지, qnaNo, qnaCategory, qnaTitle, qnaSecret 항목의 값들을 조회하여라.
+		String sql = "SELECT qna_no qnaNo, qna_category qnaCategory, qna_title qnaTitle, qna_content qnaContent, qna_secret qnaSecret, member_no memberNo, create_date createDate, update_date updateDate FROM qna WHERE qna_secret='Y' ORDER BY create_date DESC LIMIT 0,5";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 -> + " + stmt);
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		
+		// 1.1) Qna 클래스 배열 객체 생성
+		ArrayList<Qna> list = new ArrayList<Qna>();
+		
+		while(rs.next()) {
+			// 1.2) Qna 클래스 객체 생성(쿼리 실행 값들 저장)
+			Qna qna = new Qna();
+			qna.setQnaNo(rs.getInt("qnaNo"));
+			qna.setQnaCategory(rs.getString("qnaCategory"));
+			qna.setQnaTitle(rs.getString("qnaTitle"));
+			qna.setQnaContent(rs.getString("qnaContent"));
+			qna.setQnaSecret(rs.getString("qnaSecret"));
+			qna.setMemberNo(rs.getInt("memberNo"));
+			qna.setCreateDate(rs.getString("createDate"));
+			qna.setUpdateDate(rs.getString("updateDate"));
+			
+			list.add(qna);
+		}
+		System.out.println("[debug] list 확인 -> + " + list); 
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return list;
+	}
 	
 	// (5) [회원 및 관리자] QnA 게시물 삭제하기 코드
 	public int deleteQna(int qnaNo) throws ClassNotFoundException, SQLException {

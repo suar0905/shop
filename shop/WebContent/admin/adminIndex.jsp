@@ -45,6 +45,12 @@
 	
 	// (6) Notice 클래스 배열 객체 생성(최신 공지사항 5개 출력)
 	ArrayList<Notice> newNoticeList = noticeDao.selectNoticeListRecentDatePage();
+	
+	// (7) QnaDao 클래스 객체 생성
+	QnaDao qnaDao = new QnaDao();
+	
+	// (8) Qna 클래스 배열 객체 생성(최신 Qna 개방글 게시물 5개 출력)
+	ArrayList<Qna> newQnaList = qnaDao.selectQnaListRecentDatePage();
 %>
 <!DOCTYPE html>
 <html>
@@ -65,6 +71,22 @@
 	<h1>관리자 페이지</h1>
 	</div>
 	<br>
+	<!-- QnA 목록 -->
+	<h2>최신 QnA 목록</h2>
+	<table border="1">
+		<%
+			for(Qna q : newQnaList) {
+		%>
+				<td>
+					<div><a href="<%=request.getContextPath()%>/selectQnaList.jsp">● <%=q.getQnaNo()%>번 게시물</a></div>
+					<div><%=q.getMemberNo()%>번 회원</div>
+					<div>제목 : <%=q.getQnaTitle()%></div>
+				</td>
+		<%		
+			}
+		%>
+	</table>
+	<br>
 	<!-- 공지사항 목록 -->
 	<h2>최신 공지사항 목록</h2>
 	<table border="1">
@@ -72,7 +94,7 @@
 			for(Notice n : newNoticeList) {
 		%>
 				<td>
-					<div><a href="<%=request.getContextPath()%>/selectNoticeOne.jsp"><%=n.getNoticeNo()%>번 공지</a></div>
+					<div><a href="<%=request.getContextPath()%>/selectNoticeOne.jsp">● <%=n.getNoticeNo()%>번 공지</a></div>
 					<div><%=n.getMemberNo()%>번 회원의</div>
 					<div>제목 : <%=n.getNoticeTitle()%></div>
 				</td>
