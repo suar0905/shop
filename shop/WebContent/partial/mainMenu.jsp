@@ -9,12 +9,6 @@
 			<a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">[홈으로]</a>
 		</li>
 		<li class="nav-item active">
-			<a class="navbar-brand" href="">menu</a>
-		</li>	
-		<li class="nav-item active">
-			<a class="navbar-brand" href="">menu</a>
-		</li>
-		<li class="nav-item active">
 			<a class="navbar-brand" href="<%=request.getContextPath()%>/selectNoticeOne.jsp">[공지사항게시판 관리]</a>
 		</li>
 		<li class="nav-item active">

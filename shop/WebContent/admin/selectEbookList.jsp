@@ -100,7 +100,7 @@
 	<!-- end : mainMenu include -->
 	
 	<div class="jumbotron">
-	<h1>* 전자책 관리 *</h1>
+	<h1>* 전자책 목록 페이지 *</h1>
 	<form action="<%=request.getContextPath()%>/admin/selectEbookList.jsp" method="post">
 		<select name="categoryName">
 			<%

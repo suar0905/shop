@@ -28,7 +28,7 @@
 	// 목록 데이터 시작 행
 	int beginRow = (currentPage - 1) * Row_PER_PAGE;
 	
-	// 
+	// OrderDao 클래스 객체 생성
 	OrderDao orderDao = new OrderDao();
 	ArrayList<OrderEbookMember> list = orderDao.selectOrderList(beginRow, Row_PER_PAGE);
 	
@@ -62,6 +62,7 @@
 <head>
 <meta charset="UTF-8">
 <title>주문관리 페이지</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
@@ -71,9 +72,9 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div>
-		<h1>주문목록 페이지</h1>
-		<table border="1">
+	<div class="jumbotron">
+		<h1>* 회원 주문목록 페이지 *</h1>
+		<table class="table table-secondary table-bordered" border="1">
 			<thead>
 				<tr>
 					<th>orderNo</th>
@@ -99,8 +100,41 @@
 				%>
 			</tbody>
 		</table>
-		<a href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=currentPage-1%>">이전</a>
-		<a href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=currentPage+1%>">다음</a>
+		<div class="text-center">
+		<%
+			// (1)에서 생성한 loginMember변수 사용
+			// [처음으로(<<)] 버튼
+		%>
+			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=1">[처음으로]</a>
+		<%
+			// [이전(<)] 버튼
+			// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
+			if(startPage > displayPage) {
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=startPage-displayPage%>">[이전]</a>
+		<% 		
+			}
+		
+			// 페이지 번호[1,2,3..9] 버튼
+			for(int i=startPage; i<=endPage; i++) {
+				System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=i%>">[<%=i%>]</a>
+		<% 		
+			}
+			
+			// [다음(>)] 버튼
+			// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
+			if(endPage < lastPage) {
+		%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
+		<% 		
+			}
+			
+			// [끝으로(>>)] 버튼
+		%>	
+			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=lastPage%>">[끝으로]</a>
+		</div>
 	</div>
 </body>
 </html>

@@ -11,6 +11,37 @@ import vo.Notice;
 
 public class NoticeDao {
 	
+	// (6) [비회원 및 회원 및 관리자] 공지사항 게시글 총 데이터 코드
+	public int totalNoticeCount() throws ClassNotFoundException, SQLException {
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		// 쿼리 생성
+		// 쿼리문 : notice테이블의 총 데이터 수를 조회하여라.
+		String sql = "SELECT count(*) FROM notice";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println("[debug] stmt 확인 -> " + stmt); 
+		
+		// 총 데이터 개수 변수
+		int totalCount = 0;
+		
+		// 쿼리 실행
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			totalCount = rs.getInt("count(*)");
+		}
+		System.out.println("[debug] totalCount 확인 -> " + totalCount);
+		
+		// 기록 종료
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return totalCount;
+	}
+	
 	// (5) [관리자] 공지사항 삭제 코드
 	public int deleteNotice(int noticeNo) throws ClassNotFoundException, SQLException {
 		// deleteNotice메소드의 noticeNo 입력값 확인
