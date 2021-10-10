@@ -143,7 +143,7 @@
 		%>
 				<td>
 					<div><a href="<%=request.getContextPath()%>/admin/selectEbookOne.jsp"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
-					<div><a href="#"><%=e.getEbookTitle()%></a></div>
+					<div><a href="<%=request.getContextPath()%>/admin/selectEbookOne.jsp"><%=e.getEbookTitle()%></a></div>
 					<div>₩ <%=e.getEbookPrice()%></div>
 				</td>
 		<% 		
