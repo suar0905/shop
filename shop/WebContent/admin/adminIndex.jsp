@@ -23,16 +23,16 @@
 	System.out.println("[debug] currentPage 확인 -> " + currentPage);
 	
 	// 목록 데이터 보여질 행의 수(final -> 바뀔 수 없음)
-	final int Row_PER_PAGE = 10;
+	final int ROW_PER_PAGE = 10;
 	
 	// 목록 데이터 시작 행
-	int beginRow = (currentPage - 1) * Row_PER_PAGE;
+	int beginRow = (currentPage - 1) * ROW_PER_PAGE;
 	
 	// (1) EbookDao 클래스 객체 생성
 	EbookDao ebookDao = new EbookDao();
 
 	// (2) Ebook 클래스 배열 객체 생성(전체 상품 목록 출력)
-	ArrayList<Ebook> ebookList = ebookDao.selectEbookList(beginRow, Row_PER_PAGE);
+	ArrayList<Ebook> ebookList = ebookDao.selectEbookList(beginRow, ROW_PER_PAGE);
 	
 	// (3) Ebook 클래스 배열 객체 생성(인기 상품 목록 5개 출력)
 	ArrayList<Ebook> popularEbookList = ebookDao.selectPopularEbookList();
@@ -51,6 +51,31 @@
 	
 	// (8) Qna 클래스 배열 객체 생성(최신 Qna 개방글 게시물 5개 출력)
 	ArrayList<Qna> newQnaList = qnaDao.selectQnaListRecentDatePage();
+	
+	// 전자책 상품 총 개수
+	int totalCount = ebookDao.totalEbookCount();
+	
+	// 마지막 페이지
+	int lastPage = totalCount / ROW_PER_PAGE;
+	if(totalCount % ROW_PER_PAGE != 0) {
+		lastPage = lastPage + 1;
+	}
+	System.out.println("[debug] lastPage 확인 -> " + lastPage);
+	
+	// 화면에 보여질 페이지 번호의 개수([1], [2], [3] ... [10])
+	int displayPage = 10;
+	
+	// 화면에 보여질 시작 페이지 번호
+	// ((현재페이지번호 - 1) / 화면에 보여질 페이지 번호) * 화면에 보여질 페이지번호 + 1;
+	// (currentPage - 1)을 하는 이유는 현재페이지가 10일시에도 startPage가 1이기 위해
+	int startPage = ((currentPage - 1) / displayPage) * displayPage + 1;
+	System.out.println("[debug] startPage 확인 -> " + startPage);
+	
+	// 화면에 보여질 끝 페이지 번호
+	// 화면에 보여질 시작 페이지 번호 + 화면에 보여질 페이지 번호 - 1
+	// -1을 하는 이유: 페이지 번호의 개수가 10개이기 때문에 startPage에서 더한 1을 빼준다.
+	int endPage = startPage + displayPage - 1;
+	System.out.println("[debug] endPage 확인 -> " + endPage); 
 %>
 <!DOCTYPE html>
 <html>
@@ -137,26 +162,53 @@
 	</table>
 	<br>
 	<!-- 전체 상품 목록 -->
-	<h2>전체 상품 목록</h2>
-	<table border="1">
-		<%
-			int i = 0; // 줄바꿈하기 위한 변수
-			for(Ebook e : ebookList) {
-		%>
-				<td>
-					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
-					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
-					<div>₩ <%=e.getEbookPrice()%></div>
-				</td>	
-		<% 		
-				i=i+1; // for문이 끝날때마다 i가 1씩 증가한다.
-				if(i%5==0) { // i가 5로 나누어 떨어지면
-		%>
-					<tr></tr> <!-- 줄바꿈 -->
-		<% 
+	<div>
+		<h2>전체 상품 목록</h2>
+		<table border="1">
+			<%
+				int i = 0; // 줄바꿈하기 위한 변수
+				for(Ebook e : ebookList) {
+			%>
+					<td>
+						<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
+						<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
+						<div>₩ <%=e.getEbookPrice()%></div>
+					</td>	
+			<% 		
+					i=i+1; // for문이 끝날때마다 i가 1씩 증가한다.
+					if(i%5==0) { // i가 5로 나누어 떨어지면
+			%>
+						<tr></tr> <!-- 줄바꿈 -->
+			<% 
+					}
 				}
-			}
-		%>
-	</table>
+			%>
+		</table>
+		<div>
+			<%
+				// 이전 버튼
+				if(startPage > displayPage) {
+			%>
+					<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/admin/adminIndex.jsp?currentPage=<%=currentPage-1%>">이전</a>
+			<% 		
+				}
+				
+				// 페이지 번호[1,2,3..9] 버튼
+				for(int j=startPage; j<=endPage; j++) {
+					System.out.println("[debug] 만들어지는 페이지 수 -> " + j);
+			%>
+					<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/admin/adminIndex.jsp?currentPage=<%=j%>">[<%=j%>]</a>
+			<% 		
+				}	
+		
+				// 다음 버튼
+				if(endPage < lastPage) {
+			%>
+					<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/admin/adminIndex.jsp?currentPage=<%=currentPage+1%>">다음</a>
+			<%  		
+				}
+			%>
+		</div>
+	</div>	
 </body>
 </html>
