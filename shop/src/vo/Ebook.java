@@ -107,4 +107,13 @@ public class Ebook {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	@Override
+	public String toString() {
+		return "Ebook [ebookNo=" + ebookNo + ", ebookISBN=" + ebookISBN + ", categoryName=" + categoryName
+				+ ", ebookTitle=" + ebookTitle + ", ebookAuthor=" + ebookAuthor + ", ebookCompany=" + ebookCompany
+				+ ", ebookPageCount=" + ebookPageCount + ", ebookPrice=" + ebookPrice + ", ebookImg=" + ebookImg
+				+ ", ebookSummary=" + ebookSummary + ", ebookState=" + ebookState + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + "]";
+	}
 }

@@ -67,4 +67,11 @@ public class Qna {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	@Override
+	public String toString() {
+		return "Qna [qnaNo=" + qnaNo + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle + ", qnaContent="
+				+ qnaContent + ", qnaSecret=" + qnaSecret + ", memberNo=" + memberNo + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + "]";
+	}
 }

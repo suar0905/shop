@@ -51,4 +51,10 @@ public class Notice {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	@Override
+	public String toString() {
+		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
+				+ ", memberNo=" + memberNo + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+	}
 }

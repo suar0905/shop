@@ -74,4 +74,11 @@ public class Member {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
+	
+	@Override
+	public String toString() {
+		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPw=" + memberPw + ", memberLevel="
+				+ memberLevel + ", memberName=" + memberName + ", memberAge=" + memberAge + ", memberGender="
+				+ memberGender + ", updateDate=" + updateDate + ", createDate=" + createDate + "]";
+	}
 }

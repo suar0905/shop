@@ -51,4 +51,11 @@ public class QnaComment {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	@Override
+	public String toString() {
+		return "QnaComment [qnaCommentNo=" + qnaCommentNo + ", qnaNo=" + qnaNo + ", qnaCommentContent="
+				+ qnaCommentContent + ", memberNo=" + memberNo + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
+	}
 }

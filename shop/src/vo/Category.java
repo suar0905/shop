@@ -35,4 +35,10 @@ public class Category {
 	public void setCategoryState(String categoryState) {
 		this.categoryState = categoryState;
 	}
+	
+	@Override
+	public String toString() {
+		return "Category [categoryName=" + categoryName + ", updateDate=" + updateDate + ", createDate=" + createDate
+				+ ", categoryState=" + categoryState + "]";
+	}
 }
