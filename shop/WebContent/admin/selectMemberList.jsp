@@ -84,7 +84,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원목록 페이지</title>
+<title>회원관리 페이지</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -93,109 +93,97 @@
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
 	</div>
 	
-	<div class="jumbotron">
-		<h1>* 회원목록 페이지 *</h1>
-		<table class="table table-secondary table-bordered" border="1">
-			<thead>
-				<tr>
-					<th>memberNo</th>
-					<th>memberId</th>
-					<th>memberLevel</th>
-					<th>memberName</th>
-					<th>회원상세보기</th>
-					<th>회원등급 수정</th>
-					<th>회원비밀번호 수정</th>
-					<th>회원탈퇴</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-					for(Member m : memberList) {
-				%>
-						<tr>
-							<td><%=m.getMemberNo()%></td>
-							<td><%=m.getMemberId()%></td>
-							<td>
-								<%=m.getMemberLevel()%>
-								<%
-									if(m.getMemberLevel() == 0) {
-								%>
-										<span>[일반회원]</span>
-								<% 		
-									} else if(m.getMemberLevel() == 1) {
-								%>
-										<span>[관리자]</span>
-								<% 		
-									}
-								%>
-							</td>
-							<td><%=m.getMemberName()%></td>
-							<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/selectMemberOne.jsp?memberNo=<%=m.getMemberNo()%>">회원상세보기</a></td>
-							<td>
-								<!-- 특정 회원등급을 수정한다. -->
-								<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/updateMemberLevelForm.jsp?memberNo=<%=m.getMemberNo()%>&memberId=<%=m.getMemberId()%>&memberLevel=<%=m.getMemberLevel()%>&memberName=<%=m.getMemberName()%>&memberAge=<%=m.getMemberAge()%>&memberGender=<%=m.getMemberGender()%>">회원등급 수정</a>
-							</td>
-							<td>
-								<!-- 특정 회원비밀번호를 수정한다. -->
-								<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/updateMemberPwForm.jsp?memberNo=<%=m.getMemberNo()%>&memberId=<%=m.getMemberId()%>&memberLevel=<%=m.getMemberLevel()%>&memberName=<%=m.getMemberName()%>&memberAge=<%=m.getMemberAge()%>&memberGender=<%=m.getMemberGender()%>">회원비밀번호 수정</a>
-							</td>
-							<td>
-								<!-- 특정 회원정보를 삭제한다. -->
-								<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/deleteMemberForm.jsp?memberNo=<%=m.getMemberNo()%>&memberId=<%=m.getMemberId()%>&memberLevel=<%=m.getMemberLevel()%>&memberName=<%=m.getMemberName()%>&memberAge=<%=m.getMemberAge()%>&memberGender=<%=m.getMemberGender()%>">회원정보 삭제</a>
-							</td>
-						</tr>	
-				<% 		
-					}
-				%>
-			</tbody>
-		</table>
-		<br>
-		<div class="text-center">
-		<!-- memberId를 통해 검색하기 -->	
-		<div>
-			<form action="<%=request.getContextPath()%>/admin/selectMemberList.jsp" method="post">
-				<div>
-					회원아이디 검색 :
-					<input class="btn btn-outline-secondary" type="text" name="searchMemberId">
-					<input class="btn btn-outline-dark" type="submit" value="검색하기">
-				</div>
-			</form>
-		</div>	
-		
-		<%
-			// (1)에서 생성한 loginMember변수 사용
-			// [처음으로(<<)] 버튼
-		%>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=1&searchMemberId=<%=searchMemberId%>">[처음으로]</a>
-		<%
-			// [이전(<)] 버튼
-			// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
-			if(startPage > displayPage) {
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=startPage-displayPage%>&searchMemberId=<%=searchMemberId%>">[이전]</a>
-		<% 		
-			}
-		
-			// 페이지 번호[1,2,3..9] 버튼
-			for(int i=startPage; i<=endPage; i++) {
-				System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=i%>&searchMemberId=<%=searchMemberId%>">[<%=i%>]</a>
-		<% 		
-			}
-			
-			// [다음(>)] 버튼
-			// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 다음 버튼을 생성
-			if(endPage < lastPage) {
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage+1%>&searchMemberId=<%=searchMemberId%>">[다음]</a>
-		<% 		
-			}
-			
-			// [끝으로(>>)] 버튼
-		%>	
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=lastPage%>&searchMemberId=<%=searchMemberId%>">[끝으로]</a>
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4>회원관리 페이지</h4>
 		</div>
-	</div>		
+		
+		<div>	
+			<table class="table table-secondary table-bordered" style="text-align:center;" border="1">
+				<thead>
+					<tr>
+						<th>회원번호</th>
+						<th>회원아이디</th>
+						<th>회원상세보기</th>
+						<th>회원등급 수정</th>
+						<th>회원비밀번호 수정</th>
+						<th>회원탈퇴</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for(Member m : memberList) {
+					%>
+							<tr>
+								<td><%=m.getMemberNo()%></td>
+								<td><%=m.getMemberId()%></td>
+								<td><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/selectMemberOne.jsp?memberNo=<%=m.getMemberNo()%>">회원상세보기</a></td>
+								<td>
+									<!-- 특정 회원등급을 수정한다. -->
+									<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/updateMemberLevelForm.jsp?memberNo=<%=m.getMemberNo()%>&memberId=<%=m.getMemberId()%>&memberLevel=<%=m.getMemberLevel()%>&memberName=<%=m.getMemberName()%>&memberAge=<%=m.getMemberAge()%>&memberGender=<%=m.getMemberGender()%>">회원등급 수정</a>
+								</td>
+								<td>
+									<!-- 특정 회원비밀번호를 수정한다. -->
+									<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/updateMemberPwForm.jsp?memberNo=<%=m.getMemberNo()%>&memberId=<%=m.getMemberId()%>&memberLevel=<%=m.getMemberLevel()%>&memberName=<%=m.getMemberName()%>&memberAge=<%=m.getMemberAge()%>&memberGender=<%=m.getMemberGender()%>">회원비밀번호 수정</a>
+								</td>
+								<td>
+									<!-- 특정 회원정보를 삭제한다. -->
+									<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/deleteMemberForm.jsp?memberNo=<%=m.getMemberNo()%>&memberId=<%=m.getMemberId()%>&memberLevel=<%=m.getMemberLevel()%>&memberName=<%=m.getMemberName()%>&memberAge=<%=m.getMemberAge()%>&memberGender=<%=m.getMemberGender()%>">회원정보 탈퇴</a>
+								</td>
+							</tr>	
+					<% 		
+						}
+					%>
+				</tbody>
+			</table>
+			<br>
+			<div class="text-center">
+			<!-- memberId를 통해 검색하기 -->	
+			<div>
+				<form action="<%=request.getContextPath()%>/admin/selectMemberList.jsp" method="post">
+					<div>
+						회원아이디 검색 :
+						<input class="btn btn-outline-secondary" type="text" name="searchMemberId">
+						<input class="btn btn-outline-dark" type="submit" value="검색하기">
+					</div>
+				</form>
+			</div>	
+		
+			<%
+				// (1)에서 생성한 loginMember변수 사용
+				// [처음으로(<<)] 버튼
+			%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=1&searchMemberId=<%=searchMemberId%>">[처음으로]</a>
+			<%
+				// [이전(<)] 버튼
+				// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
+				if(startPage > displayPage) {
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=startPage-displayPage%>&searchMemberId=<%=searchMemberId%>">[이전]</a>
+			<% 		
+				}
+			
+				// 페이지 번호[1,2,3..9] 버튼
+				for(int i=startPage; i<=endPage; i++) {
+					System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=i%>&searchMemberId=<%=searchMemberId%>">[<%=i%>]</a>
+			<% 		
+				}
+				
+				// [다음(>)] 버튼
+				// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 다음 버튼을 생성
+				if(endPage < lastPage) {
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=currentPage+1%>&searchMemberId=<%=searchMemberId%>">[다음]</a>
+			<% 		
+				}
+				
+				// [끝으로(>>)] 버튼
+			%>	
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectMemberList.jsp?currentPage=<%=lastPage%>&searchMemberId=<%=searchMemberId%>">[끝으로]</a>
+			</div>
+		</div>	
+	</div>	
 </body>
 </html>

@@ -11,6 +11,44 @@ import vo.Ebook;
 
 public class EbookDao {
 	
+	// (11) [관리자] 전차책 추가하기
+	public int insertEbook(Ebook ebook) throws ClassNotFoundException, SQLException {
+		System.out.println("[debug] ebook 객체 값 확인 => " + ebook.toString());
+		
+		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용
+		ConnUtil connUtil = new ConnUtil();
+		Connection conn = connUtil.getConnection();		
+		System.out.println("[debug] conn 확인 -> + " + conn); // 디버깅 코드
+		
+		String sql = "INSERT INTO ebook(ebook_isbn, category_name, ebook_title, ebook_author, ebook_company, ebook_page_count, ebook_price, ebook_img, ebook_summary, ebook_state, create_date, update_date) VALUES(?,?,?,?,?,?,?,?,?,?,NOW(),NOW())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, ebook.getEbookISBN());
+		stmt.setString(2, ebook.getCategoryName());
+		stmt.setString(3, ebook.getEbookTitle());
+		stmt.setString(4, ebook.getEbookAuthor());
+		stmt.setString(5, ebook.getEbookCompany());
+		stmt.setInt(6, ebook.getEbookPageCount());
+		stmt.setInt(7, ebook.getEbookPrice());
+		stmt.setString(8, ebook.getEbookImg());
+		stmt.setString(9, ebook.getEbookSummary());
+		stmt.setString(10, ebook.getEbookState());
+		
+		// 쿼리 설정
+		int insertRs = stmt.executeUpdate();
+		
+		if(insertRs == 1) {
+			System.out.println("추가 성공!");
+		} else {
+			System.out.println("추가 실패!");
+		}
+		
+		// 기록 종료
+		stmt.close();
+		conn.close();
+		
+		return insertRs;
+	}
+	
 	// (10) [회원] 신상품 목록 5개 출력 코드
 	public ArrayList<Ebook> selectNewEbookList() throws ClassNotFoundException, SQLException {
 		// maria db를 사용 및 접속하기 위해 commons 패키지의 ConnUtil클래스 사용

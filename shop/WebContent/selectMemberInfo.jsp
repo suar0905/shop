@@ -53,49 +53,52 @@
 	<% 		
 		}
 	%>
-	
-	<div class="jumbotron">
-		<h1>회원정보 페이지</h1>
-		<table class="table table-secondary table-bordered" border="1">
-			<%
-				for(Member m : list) {
-			%>
-					<div>
-						<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/updateMemberInfoPwForm.jsp?memberNo=<%=m.getMemberNo()%>">비밀번호 수정</a> 
-						<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/deleteMemberInfoForm.jsp?memberNo=<%=m.getMemberNo()%>&memberName=<%=m.getMemberName()%>">회원탈퇴</a>
-					</div>
-					<tr>
-						<th>memberId</th>
-						<td><%=m.getMemberId()%></td>
-					</tr>
-					<tr>
-						<th>memberLevel</th>
-						<td><%=m.getMemberLevel()%></td>
-					</tr>
-					<tr>
-						<th>memberName</th>
-						<td><%=m.getMemberName()%></td>
-					</tr>
-					<tr>
-						<th>memberAge</th>
-						<td><%=m.getMemberAge()%></td>
-					</tr>
-					<tr>
-						<th>memberGender</th>
-						<td><%=m.getMemberGender()%></td>
-					</tr>
-					<tr>
-						<th>createDate</th>
-						<td><%=m.getCreateDate()%></td>
-					</tr>
-					<tr>
-						<th>updateDate</th>
-						<td><%=m.getUpdateDate()%></td>
-					</tr>
-			<% 		
-				}
-			%>
-		</table>
+	<div class="container"> 
+		<div class="jumbotron">
+			<h4 style="text-align:center;">회원정보 페이지</h4>
+		</div>
+		<div>	
+			<table class="table table-secondary table-bordered" style="text-align:center;" border="1">
+				<%
+					for(Member m : list) {
+				%>
+						<div>
+							<a class="btn btn-outline-danger" href="<%=request.getContextPath()%>/updateMemberInfoPwForm.jsp?memberNo=<%=m.getMemberNo()%>">비밀번호 수정</a> 
+							<a class="btn btn-outline-danger" href="<%=request.getContextPath()%>/deleteMemberInfoForm.jsp?memberNo=<%=m.getMemberNo()%>&memberName=<%=m.getMemberName()%>">회원탈퇴</a>
+						</div>
+						<tr>
+							<th>회원아이디</th>
+							<td><%=m.getMemberId()%></td>
+						</tr>
+						<tr>
+							<th>회원등급</th>
+							<td><%=m.getMemberLevel()%></td>
+						</tr>
+						<tr>
+							<th>회원이름</th>
+							<td><%=m.getMemberName()%></td>
+						</tr>
+						<tr>
+							<th>회원나이</th>
+							<td><%=m.getMemberAge()%></td>
+						</tr>
+						<tr>
+							<th>성별</th>
+							<td><%=m.getMemberGender()%></td>
+						</tr>
+						<tr>
+							<th>가입날짜</th>
+							<td><%=m.getCreateDate()%></td>
+						</tr>
+						<tr>
+							<th>수정날짜</th>
+							<td><%=m.getUpdateDate()%></td>
+						</tr>
+				<% 		
+					}
+				%>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

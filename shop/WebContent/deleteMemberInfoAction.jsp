@@ -30,5 +30,6 @@
 	
 	// 완료 후 index로 이동
 	System.out.println("[debug] 정상적으로 회원탈퇴 되었습니다.");
+	session.invalidate(); // 세션 모두 초기화한다
 	response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
 %>	

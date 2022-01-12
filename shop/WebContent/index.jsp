@@ -35,34 +35,7 @@
 	<% 		
 		}
 	%>
-	
-	<div class="jumbotron">
-	<h1>메인페이지</h1>
-	<%
-		// 로그인 전(session 영역안에 null값이면)
-		if(session.getAttribute("loginMember") == null){
-	%>
-		<!-- request.getContextPath() : 실제로 프로젝트명이 변경되도 변경된 값을 가져온다. -->
-		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/loginForm.jsp">로그인</a></div>
-		<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/insertMemberForm.jsp">회원가입</a></div>
-	<% 
-		// 로그인 후(session 영역안에 값이 있으면)
-		} else{
-	%>
-			<div><%=loginMember.getMemberName()%>님 반갑습니다. 
-			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/logOut.jsp"> 로그아웃</a>
-			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectMemberInfo.jsp">회원정보</a>
-			<a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/selectOrderListByMember.jsp">나의주문목록</a>
-			</div>
-	<% 
-			if(loginMember.getMemberLevel() > 0)	 
-	%>
-			<!-- 관리자 페이지로 가는 링크 -->
-			<div><a class="btn btn-outline-dark" href="<%=request.getContextPath()%>/admin/adminIndex.jsp">관리자 페이지</a></div>			
-	<% 		
-		}
-	%>
-	</div>
+	<div class="container">
 	<%
 		// 페이징
 		int currentPage = 1;
@@ -128,119 +101,183 @@
 		System.out.println("[debug] endPage 확인 -> " + endPage); 
 	%>
 	<br>
-	<!-- QnA 목록 -->
-	<h2>최신 QnA 목록</h2>
-	<table border="1">
-		<%
-			for(Qna q : newQnaList) {
-		%>
-				<td>
-					<div><a href="<%=request.getContextPath()%>/selectQnaList.jsp">● <%=q.getQnaNo()%>번 게시물</a></div>
-					<div><%=q.getMemberNo()%>번 회원</div>
-					<div>제목 : <%=q.getQnaTitle()%></div>
-				</td>
-		<%		
-			}
-		%>
-	</table>
-	<br>
-	<!-- 공지사항 목록 -->
-	<h2>최신 공지사항 목록</h2>
-	<table border="1">
-		<%
-			for(Notice n : newNoticeList) {
-		%>
-				<td>
-					<div><a href="<%=request.getContextPath()%>/selectNoticeOne.jsp">● <%=n.getNoticeNo()%>번 공지사항</a></div>
-					<div><%=n.getMemberNo()%>번 회원</div>
-					<div>제목 : <%=n.getNoticeTitle()%></div>
-				</td>
-		<%		
-			}
-		%>
-	</table>
-	<br>
-	<!-- 신상품 목록 -->
-	<h2>신상품 목록</h2>
-	<table border="1">
-		<%
-			for(Ebook e : newEbookList) {
-		%>
-				<td>
-					<div><a href="<%=request.getContextPath()%>/admin/selectEbookOne.jsp"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
-					<div><a href="<%=request.getContextPath()%>/admin/selectEbookOne.jsp"><%=e.getEbookTitle()%></a></div>
-					<div>₩ <%=e.getEbookPrice()%></div>
-				</td>
-		<% 		
-			}
-		%>
-	</table>
-	<br>
-	<!-- 인기상품 목록 보여주기-->
-	<h2>인기 상품 목록</h2>
-	<table border="1">
-		<%
-			for(Ebook e : popularEbookList) {
-		%>
-				<td>
-					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>">
-						<img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
-					<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
-					<div>₩ <%=e.getEbookPrice()%></div>
-				</td>
-		<% 		
-			}
-		%>
-	</table>
-	<br>
-	<!-- 전체 상품 목록 -->
-	<div>
-		<h2>전체 상품 목록</h2>
-		<table border="1">
-			<%
-				int i = 0; // 줄바꿈하기 위한 변수
-				for(Ebook e : ebookList) {
-			%>
-					<td>
-						<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
-						<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
-						<div>₩ <%=e.getEbookPrice()%></div>
-					</td>	
-			<% 		
-					i=i+1; // for문이 끝날때마다 i가 1씩 증가한다.
-					if(i%5==0) { // i가 5로 나누어 떨어지면
-			%>
-						<tr></tr> <!-- 줄바꿈 -->
-			<% 
-					}
-				}
-			%>
-		</table>
-		<div>
-		<%
-			// 이전 버튼
-			if(startPage > displayPage) {
-		%>
-				<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/index.jsp?currentPage=<%=currentPage-1%>">이전</a>
-		<% 		
-			}
-			
-			// 페이지 번호[1,2,3..9] 버튼
-			for(int j=startPage; j<=endPage; j++) {
-				System.out.println("[debug] 만들어지는 페이지 수 -> " + j);
-		%>
-				<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/index.jsp?currentPage=<%=j%>">[<%=j%>]</a>
-		<% 		
-			}	
-	
-			// 다음 버튼
-			if(endPage < lastPage) {
-		%>
-				<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/index.jsp?currentPage=<%=currentPage+1%>">다음</a>
-		<%  		
-			}
-		%>
+
+	<div class="row">
+		<!-- QnA 목록 -->
+		<div class="col-lg-6">
+			<div class="card mb-4">
+				<div class="card-header" style="text-align: center;">신규 QnA 목록</div>
+				<div class="table-responsive table-hover">
+					<table class="card-table table" style="text-align: center;">
+						<thead>					
+							<tr>
+								<th>QnA 번호</th>
+								<th>QnA 제목</th>
+								<th>QnA 작성일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								for(Qna q : newQnaList) {
+							%>
+									<tr>
+										<td><%=q.getQnaNo()%></td>
+										<td><a href="<%=request.getContextPath()%>/selectQnaOne.jsp?qnaNo=<%=q.getQnaNo()%>"><%=q.getQnaTitle()%></a></td>
+										<td><%=q.getCreateDate()%></td>
+									</tr>
+							<%
+								}
+							%>		
+						</tbody>	
+					</table>
+				</div>
+			</div>
 		</div>
-	</div>
+	
+		<!-- 공지사항 목록 -->
+		<div class="col-lg-6">
+			<div class="card mb-4">
+				<div class="card-header" style="text-align: center;">신규 공지사항 목록</div>
+				<div class="table-responsive table-hover">
+					<table class="card-table table" style="text-align: center;">
+						<thead>					
+							<tr>
+								<th>공지사항 번호</th>
+								<th>공지사항 제목</th>
+								<th>공지사항 작성일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								for(Notice n : newNoticeList) {
+							%>
+									<tr>
+										<td><%=n.getNoticeNo()%></td>
+										<td><a href="<%=request.getContextPath()%>/selectNoticeOne.jsp"><%=n.getNoticeTitle()%></a></td>
+										<td><%=n.getCreateDate()%></td>
+									</tr>
+							<%
+								}
+							%>		
+						</tbody>	
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>					
+	
+	<br>
+	
+	<div class="row">
+		<!-- 신상품 목록 -->
+		<div class="col-lg-6">
+			<div class="card mb-4">
+				<div class="card-header" style="text-align: center;">신규 상품 목록</div>
+				<div class="table-responsive">
+					<table class="card-table table" style="text-align: center;">
+						<%
+							for(Ebook e : newEbookList) {
+						%>
+								<td>
+									<div>
+										<a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a>
+									</div>
+									<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
+									<div>₩ <%=e.getEbookPrice()%></div>
+								</td>
+						<% 		
+							}
+						%>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 인기상품 목록 -->
+		<div class="col-lg-6">
+			<div class="card mb-4">
+				<div class="card-header" style="text-align: center;">인기 상품 목록</div>
+				<div class="table-responsive">
+					<table class="card-table table" style="text-align: center;">
+						<%
+							for(Ebook e : popularEbookList) {
+						%>
+								<td>
+									<div>
+										<a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a>
+									</div>
+									<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
+									<div>₩ <%=e.getEbookPrice()%></div>
+								</td>
+						<% 		
+							}
+						%>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+	</div>	
+	
+	<br>
+	
+	<!-- 전체 상품 목록 -->
+	<div class="row">
+		<!-- 신상품 목록 -->
+		<div class="col-lg-12">
+			<div class="card mb-4">
+				<div class="card-header" style="text-align: center;">전체 상품 목록</div>
+				<div class="table-responsive">
+					<table class="card-table table" style="text-align: center;">
+					<%
+						int i = 0; // 줄바꿈하기 위한 변수
+						for(Ebook e : ebookList) {
+					%>
+							<td>
+								<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><img src="<%=request.getContextPath()%>/image/<%=e.getEbookImg()%>" width="200" height="200"></a></div>
+								<div><a href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></div>
+								<div>₩ <%=e.getEbookPrice()%></div>
+							</td>	
+					<% 		
+							i=i+1; // for문이 끝날때마다 i가 1씩 증가한다.
+							if(i%5==0) { // i가 5로 나누어 떨어지면
+					%>
+								<tr></tr> <!-- 줄바꿈 -->
+					<% 
+							}
+						}
+					%>
+					</table>
+					
+					<!-- 페이징 -->
+					<div style="text-align: center;">
+					<%
+						// 이전 버튼
+						if(startPage > displayPage) {
+					%>
+							<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/index.jsp?currentPage=<%=currentPage-1%>">이전</a>
+					<% 		
+						}
+						
+						// 페이지 번호[1,2,3..9] 버튼
+						for(int j=startPage; j<=endPage; j++) {
+							System.out.println("[debug] 만들어지는 페이지 수 -> " + j);
+					%>
+							<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/index.jsp?currentPage=<%=j%>">[<%=j%>]</a>
+					<% 		
+						}	
+				
+						// 다음 버튼
+						if(endPage < lastPage) {
+					%>
+							<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/index.jsp?currentPage=<%=currentPage+1%>">다음</a>
+					<%  		
+						}
+					%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>				
 </body>
 </html>

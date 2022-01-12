@@ -53,127 +53,133 @@
 	<!-- end : mainMenu include -->
 	
 	<!-- 상품을 상세하게 보면서 주문할 수 있는 페이지 -->
-	<div class="jumbotron">
-		<div>
-			<!-- 상품상세출력 -->
-			<%
-				// (1) EbookDao 클래스 객체 생성
-				EbookDao ebookDao = new EbookDao();
-			
-				// (2) Ebook 클래스 변수 생성(selectEbookOne)
-				Ebook ebook = ebookDao.selectEbookOne(ebookNo);
-			%>
+	<div class="container">
+		<div class="jumbotron">
 			<div>
-				<h2>* <%=ebook.getEbookNo()%>번 '<%=ebook.getEbookTitle()%>' 전자책 상세보기 *</h2>
-			</div>
-			<table class="table table-secondary table-bordered" border="1">
-				<tr>
-					<th>categoryName</th>
-					<td><%=ebook.getCategoryName()%></td>
-				</tr>
-				<tr>
-					<th>ebookAuthor</th>
-					<td><%=ebook.getEbookAuthor()%></td>
-				</tr>
-				<tr>
-					<th>ebookCompany</th>
-					<td><%=ebook.getEbookCompany()%></td>
-				</tr>
-				<tr>
-					<th>ebookPageCount</th>
-					<td><%=ebook.getEbookPageCount()%></td>
-				</tr>
-				<tr>
-					<th>ebookPrice</th>
-					<td><%=ebook.getEbookPrice()%></td>
-				</tr>
-				<tr>
-					<th>ebookCompany</th>
-					<td><img src="<%=request.getContextPath()%>/image/<%=ebook.getEbookImg()%>"></td>
-				</tr>
-				<tr>
-					<th>ebookSummary</th>
-					<td><%=ebook.getEbookSummary()%></td>
-				</tr>
-				<tr>
-					<th>ebookState</th>
-					<td><%=ebook.getEbookState()%></td>
-				</tr>
-				<tr>
-					<th>createDate</th>
-					<td><%=ebook.getCreateDate()%></td>
-				</tr>
-				<tr>
-					<th>updateDate</th>
-					<td><%=ebook.getUpdateDate()%></td>
-				</tr>
-			</table>	
-		</div>
-		<!-- 주문 입력하는 폼 -->
-		<%
-			// (3) Member 클래스 변수 생성
-			Member loginMember = (Member)session.getAttribute("loginMember");
-			if(loginMember == null) {
-		%>
+				<!-- 상품상세출력 -->
+				<%
+					// (1) EbookDao 클래스 객체 생성
+					EbookDao ebookDao = new EbookDao();
+				
+					// (2) Ebook 클래스 변수 생성(selectEbookOne)
+					Ebook ebook = ebookDao.selectEbookOne(ebookNo);
+				%>
 				<div>
-					<a class="btn btn-dark" href="<%=request.getContextPath()%>/loginForm.jsp">로그인 후 주문하기</a>
-					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+					<h2>* <%=ebook.getEbookNo()%>번 '<%=ebook.getEbookTitle()%>' 전자책 상세보기 *</h2>
 				</div>
-		<% 		
-			} else {
-		%>	
-				<form action="<%=request.getContextPath()%>/insertOrderAction.jsp" method="post">
-					<input type="hidden" name="ebookNo" value="<%=ebookNo%>">
-					<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
-					<input type="hidden" name="orderPrice" value="<%=ebook.getEbookPrice()%>">
-					<input class="btn btn-dark" type="submit" value="주문하기">
-					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
-				</form>
-		<%
-			}
-		%>	
-	</div>
-
-	<div class="jumbotron">
-		<!-- 해당 상품의 별점 평균 -->
-		<div>
-			<%
-				// (3) OrderCommentDao 클래스 객체 생성
-				OrderCommentDao orderCommentDao = new OrderCommentDao();
-				double avgScore = orderCommentDao.selectOrderScoreAvg(ebookNo);
-				int totalCount = orderCommentDao.totalOrderComment(ebookNo);
-			%>
-			<h2>* 총 <%=totalCount%>개의 구매 후기 *</h2>
-			<h3>별점 평균 : <%=avgScore%></h3>
-		</div>
-		<!-- 해당 상품의 후기 -->
-		<div>
-			<%
-				// (4) OrderComment 클래스 배열 변수 생성(selectOrderEbookComment메소드 이용)
-				ArrayList<OrderComment> list = orderCommentDao.selectOrderEbookComment(ebookNo, beginRow, ROW_PER_PAGE);
-			%>
-			<table class="table table-secondary border="1">
-				<thead>
+				<table class="table table-secondary table-bordered" border="1">
 					<tr>
-						<th>별점</th>
-						<th>후기</th>
+						<th>카테고리</th>
+						<td><%=ebook.getCategoryName()%></td>
 					</tr>
-				</thead>
-				<tbody>
-					<%
-						for(OrderComment oc : list) {
-					%>
-							<tr>
-								<td><%=oc.getOrderScore()%>점</td>
-								<td><%=oc.getOrderCommentContent()%></td>
-							</tr>
-					<% 		
-						}
-					%>
-				</tbody>
-			</table>	
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectEbookOne.jsp?currentPage=<%=currentPage-1%>">[이전]</a>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectEbookOne.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
+					<tr>
+						<th>전자책 작가</th>
+						<td><%=ebook.getEbookAuthor()%></td>
+					</tr>
+					<tr>
+						<th>전자책 회사</th>
+						<td><%=ebook.getEbookCompany()%></td>
+					</tr>
+					<tr>
+						<th>전자책 페이지</th>
+						<td><%=ebook.getEbookPageCount()%></td>
+					</tr>
+					<tr>
+						<th>전자책 가격</th>
+						<td><%=ebook.getEbookPrice()%></td>
+					</tr>
+					<tr>
+						<th>전자책 이미지</th>
+						<td><img src="<%=request.getContextPath()%>/image/<%=ebook.getEbookImg()%>" width="400" height="400"></td>
+					</tr>
+					<tr>
+						<th>전자책 줄거리</th>
+						<td><%=ebook.getEbookSummary()%></td>
+					</tr>
+					<tr>
+						<th>전자책 상태</th>
+						<td><%=ebook.getEbookState()%></td>
+					</tr>
+					<tr>
+						<th>등록일</th>
+						<td><%=ebook.getCreateDate()%></td>
+					</tr>
+					<tr>
+						<th>수정일</th>
+						<td><%=ebook.getUpdateDate()%></td>
+					</tr>
+				</table>	
+			</div>
+			<!-- 주문 입력하는 폼 -->
+			<div style="text-align:center;">
+			<%
+				// (3) Member 클래스 변수 생성
+				Member loginMember = (Member)session.getAttribute("loginMember");
+				if(loginMember == null) {
+			%>
+					<div>
+						<a class="btn btn-dark" href="<%=request.getContextPath()%>/loginForm.jsp">로그인 후 주문하기</a>
+						<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+					</div>
+			<% 		
+				} else {
+			%>	
+					<form action="<%=request.getContextPath()%>/insertOrderAction.jsp" method="post">
+						<input type="hidden" name="ebookNo" value="<%=ebookNo%>">
+						<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
+						<input type="hidden" name="orderPrice" value="<%=ebook.getEbookPrice()%>">
+						<input class="btn btn-outline-danger" type="submit" value="주문하기">
+						<input class="btn btn-outline-danger" type="button" value="뒤로가기" onclick="history.back();">
+					</form>
+			<%
+				}
+			%>	
+			</div>
+		</div>
+
+		<div class="jumbotron">
+			<!-- 해당 상품의 별점 평균 -->
+			<div>
+				<%
+					// (3) OrderCommentDao 클래스 객체 생성
+					OrderCommentDao orderCommentDao = new OrderCommentDao();
+					double avgScore = orderCommentDao.selectOrderScoreAvg(ebookNo);
+					int totalCount = orderCommentDao.totalOrderComment(ebookNo);
+				%>
+				<h2>* 총 <%=totalCount%>개의 구매 후기 *</h2>
+				<h3>별점 평균 : <%=avgScore%></h3>
+			</div>
+			<!-- 해당 상품의 후기 -->
+			<div>
+				<%
+					// (4) OrderComment 클래스 배열 변수 생성(selectOrderEbookComment메소드 이용)
+					ArrayList<OrderComment> list = orderCommentDao.selectOrderEbookComment(ebookNo, beginRow, ROW_PER_PAGE);
+				%>
+				<table class="table table-secondary border="1">
+					<thead>
+						<tr>
+							<th>별점</th>
+							<th>후기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for(OrderComment oc : list) {
+						%>
+								<tr>
+									<td><%=oc.getOrderScore()%>점</td>
+									<td><%=oc.getOrderCommentContent()%></td>
+								</tr>
+						<% 		
+							}
+						%>
+					</tbody>
+				</table>
+				<div style="text-align:center;">
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=ebookNo%>&currentPage=<%=currentPage-1%>">[이전]</a>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectEbookOne.jsp?ebookNo=<%=ebookNo%>&currentPage=<%=currentPage+1%>">[다음]</a>
+				</div>	
+			</div>
 		</div>
 	</div>
 </body>

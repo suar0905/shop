@@ -25,27 +25,36 @@
 	<div>
 		<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
 	</div>
-
-	<div class="jumbotron">
-		<h1>* 로그인 페이지 *</h1>
-		<form id="loginForm" action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
-			<div>
-				회원 아이디 : 
-				<input class="btn btn-outline-secondary" type="text" name="memberId" placeholder="memberId 입력">
-			</div>
-			<div>
-				회원 비밀번호 : 
-				<input class="btn btn-outline-secondary" type="password" name="memberPw" placeholder="memberPw 입력">
-			</div>
-			<br>
-			<div>
-				<input class="btn btn-dark" type="button" id="loginBtn" value="로그인">
-				<input class="btn btn-dark" type="reset" value="초기화">
-				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
-			</div>
-		</form>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>* 로그인 페이지 *</h1>
+			<form id="loginForm" action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
+				<div>
+					회원 아이디 : 
+					<input class="btn btn-outline-secondary" type="text" name="memberId" value="admin" placeholder="memberId 입력">
+				</div>
+				<div>
+					회원 비밀번호 : 
+					<input class="btn btn-outline-secondary" type="password" name="memberPw" value="1234" placeholder="memberPw 입력">
+				</div>
+				<br>
+				<div>
+					<input class="btn btn-dark" type="button" id="loginBtn" value="로그인">
+					<input class="btn btn-dark" type="reset" value="초기화">
+					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+			</form>
+		</div>
+		
+		<div>
+			일반회원 아이디 : goodee<br>
+			비밀번호 : 1234
+		</div><hr>
+		<div>
+			관리자 아이디 : admin<br>
+			비밀번호 : 1234
+		</div>
 	</div>
-	
 	<script>
 		// $ = jquery
 		$('#loginBtn').click(function(){ // loginBtn 버튼을 클릭 했을 때 함수를 실행시켜라.

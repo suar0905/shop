@@ -33,15 +33,20 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div class="jumbotron">
-		<h1>* 전자책 이미지 수정하기 *</h1>
-		<!-- application/x-www-form-urlencoded : 액션으로 문자열을 넘길때 사용한다.(기본적으로 사용(default값) -->
-		<!-- enctype="multipart/form-data" : 액션으로 기계어코드(0,1)를 넘길때 사용한다. -->
-		<form action="<%=request.getContextPath()%>/admin/updateEbookImgAction.jsp" method="post" enctype="multipart/form-data"> 
-			<div>현재 전자책 번호 : <input class="btn btn-outline-secondary" type="text" name="ebookNo" value="<%=ebookNo%>" readonly=readonly></div> 
-			<div>변경할 전자책 이미지 선택 : <input class="btn btn-outline-secondary" type="file" name="ebookImg"></div>
-			<br><input class="btn btn-dark" type="submit" value="이미지파일 수정하기">	
-		</form>
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4>전자책 이미지 수정하기</h4>
+		</div>
+		
+		<div>
+			<!-- application/x-www-form-urlencoded : 액션으로 문자열을 넘길때 사용한다.(기본적으로 사용(default값) -->
+			<!-- enctype="multipart/form-data" : 액션으로 기계어코드(0,1)를 넘길때 사용한다. -->
+			<form action="<%=request.getContextPath()%>/admin/updateEbookImgAction.jsp" method="post" enctype="multipart/form-data"> 
+				<div>현재 전자책 번호 : <input class="btn btn-outline-secondary" type="text" name="ebookNo" value="<%=ebookNo%>" readonly=readonly></div> 
+				<div>변경할 전자책 이미지 선택 : <input class="btn btn-outline-secondary" type="file" name="ebookImg"></div>
+				<br><input class="btn btn-dark" type="submit" value="이미지파일 수정하기">	
+			</form>
+		</div>
 	</div>
 </body>
 </html>

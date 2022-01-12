@@ -72,68 +72,73 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div class="jumbotron">
-		<h1>* 회원 주문목록 페이지 *</h1>
-		<table class="table table-secondary table-bordered" border="1">
-			<thead>
-				<tr>
-					<th>orderNo</th>
-					<th>ebookTitle</th>
-					<th>orderPrice</th>
-					<th>createDate</th>
-					<th>memberId</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-					for(OrderEbookMember oem : list) {
-				%>
-						<tr>
-							<td><%=oem.getOrder().getOrderNo()%></td>
-							<td><%=oem.getEbook().getEbookTitle()%></td>
-							<td><%=oem.getOrder().getOrderPrice()%></td>
-							<td><%=oem.getOrder().getCrateDate()%></td>
-							<td><%=oem.getMember().getMemberId()%></td>
-						</tr>
-				<% 		
-					}
-				%>
-			</tbody>
-		</table>
-		<div class="text-center">
-		<%
-			// (1)에서 생성한 loginMember변수 사용
-			// [처음으로(<<)] 버튼
-		%>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=1">[처음으로]</a>
-		<%
-			// [이전(<)] 버튼
-			// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
-			if(startPage > displayPage) {
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=startPage-displayPage%>">[이전]</a>
-		<% 		
-			}
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4> 회원 주문관리 페이지 </h4>
+		</div>
 		
-			// 페이지 번호[1,2,3..9] 버튼
-			for(int i=startPage; i<=endPage; i++) {
-				System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=i%>">[<%=i%>]</a>
-		<% 		
-			}
+		<div>
+			<table class="table table-secondary table-bordered" style="text-align:center;" border="1">
+				<thead>
+					<tr>
+						<th>주문번호</th>
+						<th>전자책 제목</th>
+						<th>전자책 가격</th>
+						<th>주문일자</th>
+						<th>구매아이디</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for(OrderEbookMember oem : list) {
+					%>
+							<tr>
+								<td><%=oem.getOrder().getOrderNo()%></td>
+								<td><%=oem.getEbook().getEbookTitle()%></td>
+								<td><%=oem.getOrder().getOrderPrice()%></td>
+								<td><%=oem.getOrder().getCrateDate()%></td>
+								<td><%=oem.getMember().getMemberId()%></td>
+							</tr>
+					<% 		
+						}
+					%>
+				</tbody>
+			</table>
+			<div class="text-center">
+			<%
+				// (1)에서 생성한 loginMember변수 사용
+				// [처음으로(<<)] 버튼
+			%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=1">[처음으로]</a>
+			<%
+				// [이전(<)] 버튼
+				// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
+				if(startPage > displayPage) {
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=startPage-displayPage%>">[이전]</a>
+			<% 		
+				}
 			
-			// [다음(>)] 버튼
-			// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
-			if(endPage < lastPage) {
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
-		<% 		
-			}
-			
-			// [끝으로(>>)] 버튼
-		%>	
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=lastPage%>">[끝으로]</a>
+				// 페이지 번호[1,2,3..9] 버튼
+				for(int i=startPage; i<=endPage; i++) {
+					System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=i%>">[<%=i%>]</a>
+			<% 		
+				}
+				
+				// [다음(>)] 버튼
+				// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
+				if(endPage < lastPage) {
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
+			<% 		
+				}
+				
+				// [끝으로(>>)] 버튼
+			%>	
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectOrderList.jsp?currentPage=<%=lastPage%>">[끝으로]</a>
+			</div>
 		</div>
 	</div>
 </body>

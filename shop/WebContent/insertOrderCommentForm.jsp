@@ -42,49 +42,64 @@
 <title>전자책 후기 페이지</title>
 </head>
 <body>
-	<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
-	<div>
-		<!-- 절대주소(기준점이 같음) -->
-		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
-	</div>
-	<!-- end : mainMenu include -->
+	<%
+		if(loginMember.getMemberLevel() == 0) {
+	%>
+			<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
+			<div>
+				<!-- 절대주소(기준점이 같음) -->
+				<jsp:include page="/partial/mainMenu.jsp"></jsp:include>
+			</div>
+			<!-- end : mainMenu include -->
+	<% 		
+		} else {
+	%>
+			<!-- start : mainMenu include - submenu.jsp의 내용을 가져온다. -->
+			<div>
+				<!-- 절대주소(기준점이 같음) -->
+				<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
+			</div>
+			<!-- end : mainMenu include -->
+	<% 		
+		}
+	%>
 	
 	<!-- 전자책 후기 작성 -->
-	<div class="jumbotron">
-		<h1><%=orderNo%>번 주문번호의 <%=ebookNo%>번 전자책 후기 작성</h1>
-		<form action="<%=request.getContextPath()%>/insertOrderCommentAction.jsp" method="post">
-		<table class="table table-secondary table-bordered" border="1">
-			<tr>
+	<div class="container">
+		<div class="jumbotron" style="text-align:center;">
+			<h4><%=orderNo%>번 주문번호의 <%=ebookNo%>번 전자책 후기 작성</h4>
+		</div>
+		<div>	
+			<form action="<%=request.getContextPath()%>/insertOrderCommentAction.jsp" method="post">
 				<!-- 주문 번호 -->
-				<input type="text" hidden="hidden" name="orderNo" value=<%=orderNo%> readonly="readonly"> 
-			</tr>
-			<tr>
+				<input type="hidden" name="orderNo" value="<%=orderNo%>"> 	
 				<!-- 전자책 상품 번호 -->
-				<input type="text" hidden="hidden" name="ebookNo" value=<%=ebookNo%> readonly="readonly"> 
-			</tr>
-			<tr>
-				<th>전자책 상품 별점</th>
-				<td>
-					<select name="orderScore">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-					</select>
-				</td>	
-			</tr>
-			<tr>
-				<th>전자책 상품 내용</th>
-				<td><textarea name="orderCommentContent" rows="5" cols="80" placeholder="Enter Comment"></textarea></td>
-			</tr>
-		</table>
-			<div>
-				<input class="btn btn-dark" type="submit" value="작성하기">
-				<input class="btn btn-dark" type="reset" value="초기화">
-				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
-			</div>
-		</form>
+				<input type="hidden" name="ebookNo" value=<%=ebookNo%>> 
+			<table class="table table-secondary table-bordered" border="1">
+				<tr>
+					<th style="text-align:center;">전자책 상품 별점</th>
+					<td>
+						<select class="btn btn-light" name="orderScore">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>	
+				</tr>
+				<tr>
+					<th style="text-align:center;">전자책 상품 내용</th>
+					<td><textarea class="form-control" name="orderCommentContent" rows="5" cols="80" placeholder="후기를 작성해주세요"></textarea></td>
+				</tr>
+			</table>
+				<div style="text-align:center;">
+					<input class="btn btn-dark" type="submit" value="작성하기">
+					<input class="btn btn-dark" type="reset" value="초기화">
+					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

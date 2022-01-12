@@ -54,58 +54,61 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div class="jumbotron">
-		<div>
-			<h2>* <%=ebook.getEbookNo()%>번 '<%=ebook.getEbookTitle()%>' 전자책 상세보기 *</h2>
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4> <%=ebook.getEbookNo()%>번 '<%=ebook.getEbookTitle()%>' 전자책 상세보기 </h4>
 		</div>
-		<table class="table table-secondary table-bordered" border="1">
-			<tr>
-				<th>categoryName</th>
-				<td><%=ebook.getCategoryName()%></td>
-			</tr>
-			<tr>
-				<th>ebookAuthor</th>
-				<td><%=ebook.getEbookAuthor()%></td>
-			</tr>
-			<tr>
-				<th>ebookCompany</th>
-				<td><%=ebook.getEbookCompany()%></td>
-			</tr>
-			<tr>
-				<th>ebookPageCount</th>
-				<td><%=ebook.getEbookPageCount()%></td>
-			</tr>
-			<tr>
-				<th>ebookPrice</th>
-				<td><%=ebook.getEbookPrice()%></td>
-			</tr>
-			<tr>
-				<th>ebookCompany</th>
-				<td><img src="<%=request.getContextPath()%>/image/<%=ebook.getEbookImg()%>"></td>
-			</tr>
-			<tr>
-				<th>ebookSummary</th>
-				<td><%=ebook.getEbookSummary()%></td>
-			</tr>
-			<tr>
-				<th>ebookState</th>
-				<td><%=ebook.getEbookState()%></td>
-			</tr>
-			<tr>
-				<th>createDate</th>
-				<td><%=ebook.getCreateDate()%></td>
-			</tr>
-			<tr>
-				<th>updateDate</th>
-				<td><%=ebook.getUpdateDate()%></td>
-			</tr>
-		</table>
-		<div>	
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/deleteEbookForm.jsp?ebookNo=<%=ebook.getEbookNo()%>&ebookTitle=<%=ebook.getEbookTitle()%>">삭제</a>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/updateEbookPriceForm.jsp?ebookNo=<%=ebook.getEbookNo()%>&ebookPrice=<%=ebook.getEbookPrice()%>">가격수정</a>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/updateEbookImgForm.jsp?ebookNo=<%=ebook.getEbookNo()%>">이미지수정</a>
-			<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
-		</div> 
+		
+		<div>
+			<table class="table table-secondary table-bordered" border="1">
+				<tr>
+					<th>전자책 카테고리 이름</th>
+					<td><%=ebook.getCategoryName()%></td>
+				</tr>
+				<tr>
+					<th>전자책 작가</th>
+					<td><%=ebook.getEbookAuthor()%></td>
+				</tr>
+				<tr>
+					<th>전자책 출판사</th>
+					<td><%=ebook.getEbookCompany()%></td>
+				</tr>
+				<tr>
+					<th>전자책 총페이지 수</th>
+					<td><%=ebook.getEbookPageCount()%></td>
+				</tr>
+				<tr>
+					<th>전자책 가격</th>
+					<td><%=ebook.getEbookPrice()%></td>
+				</tr>
+				<tr>
+					<th>전자책 이미지</th>
+					<td><img src="<%=request.getContextPath()%>/image/<%=ebook.getEbookImg()%>"></td>
+				</tr>
+				<tr>
+					<th>전자책 줄거리</th>
+					<td><%=ebook.getEbookSummary()%></td>
+				</tr>
+				<tr>
+					<th>전자책 상태</th>
+					<td><%=ebook.getEbookState()%></td>
+				</tr>
+				<tr>
+					<th>등록일</th>
+					<td><%=ebook.getCreateDate()%></td>
+				</tr>
+				<tr>
+					<th>수정일</th>
+					<td><%=ebook.getUpdateDate()%></td>
+				</tr>
+			</table>
+			<div>	
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/deleteEbookForm.jsp?ebookNo=<%=ebook.getEbookNo()%>&ebookTitle=<%=ebook.getEbookTitle()%>">삭제</a>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/updateEbookPriceForm.jsp?ebookNo=<%=ebook.getEbookNo()%>&ebookPrice=<%=ebook.getEbookPrice()%>">가격수정</a>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/updateEbookImgForm.jsp?ebookNo=<%=ebook.getEbookNo()%>">이미지수정</a>
+				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+			</div> 
+		</div>
 	</div>	
 </body>
 </html>

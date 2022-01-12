@@ -42,44 +42,49 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div class="jumbotron">
-		<h1>* 회원정보 삭제 페이지 *</h1>
-		<form action="<%=request.getContextPath()%>/admin/deleteMemberAction.jsp" method="post">
-			<table class="table table-secondary table-bordered" border="1">
-				<thead>
-					<tr>
-						<th>memberNo</th>
-						<td><input class="btn btn-outline-secondary" type="text" value="<%=memberNo%>" name="memberNo" readonly="readonly"></td>
-					</tr>
-					<tr>
-						<th>memberId</th>
-						<td><input class="btn btn-outline-secondary" type="text" value="<%=memberId%>" name="memberId" readonly="readonly"></td>
-					</tr>
-					<tr>
-						<th>memberLevel</th>
-						<td><input class="btn btn-outline-secondary" type="text" value="<%=memberLevel%>" name="memberLevel" readonly="readonly"></td>
-					</tr>
-					<tr>
-						<th>memberName</th>
-						<td><input class="btn btn-outline-secondary" type="text" value="<%=memberName%>" name="memberName" readonly="readonly"></td>
-					</tr>
-					<tr>
-						<th>memberAge</th>
-						<td><input class="btn btn-outline-secondary" type="text" value="<%=memberAge%>" name="memberAge" readonly="readonly"></td>
-					</tr>
-					<tr>
-						<th>memberGender</th>
-						<td><input class="btn btn-outline-secondary" type="text" value="<%=memberGender%>" name="memberGender" readonly="readonly"></td>
-					</tr>
-				</thead>
-			</table>
-			<br>
-			<div>
-				정말로 회원정보를 삭제하시겠습니까? -->
-				<input class="btn btn-dark" type="submit" value="삭제하기">
-				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
-			</div>
-		</form>
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+		<h4>회원정보 삭제 페이지</h4>
+		</div>
+		
+		<div>
+			<form action="<%=request.getContextPath()%>/admin/deleteMemberAction.jsp" method="post">
+				<table class="table table-secondary table-bordered" style="text-align:center;" border="1">
+					<thead>
+						<tr>
+							<th>회원번호</th>
+							<td><input class="btn btn-outline-secondary" type="text" value="<%=memberNo%>" name="memberNo" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th>회원아이디</th>
+							<td><input class="btn btn-outline-secondary" type="text" value="<%=memberId%>" name="memberId" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th>회원등급</th>
+							<td><input class="btn btn-outline-secondary" type="text" value="<%=memberLevel%>" name="memberLevel" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th>회원이름</th>
+							<td><input class="btn btn-outline-secondary" type="text" value="<%=memberName%>" name="memberName" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th>회원나이</th>
+							<td><input class="btn btn-outline-secondary" type="text" value="<%=memberAge%>" name="memberAge" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th>회원성별</th>
+							<td><input class="btn btn-outline-secondary" type="text" value="<%=memberGender%>" name="memberGender" readonly="readonly"></td>
+						</tr>
+					</thead>
+				</table>
+				<br>
+				<div>
+					<h3>정말로 회원정보를 삭제하시겠습니까?</h3>
+					<input class="btn btn-outline-danger" type="submit" value="삭제하기">
+					<input class="btn btn-outline-danger" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

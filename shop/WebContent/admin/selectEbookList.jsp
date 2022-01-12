@@ -99,102 +99,108 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div class="jumbotron">
-	<h1>* 전자책 목록 페이지 *</h1>
-	<form action="<%=request.getContextPath()%>/admin/selectEbookList.jsp" method="post">
-		<select name="categoryName">
-			<%
-				if(categoryName==""){
-			%>
-					<option value="" selected>전체목록</option>
-			<%
-				} else{
-			%>
-					<option value="">전체목록</option>
-			<%
-				}
-			%>
-			<%
-				for(Category c : categoryList){
-					if(categoryName.equals(c.getCategoryName())){
-			%>
-						<option value="<%=c.getCategoryName() %>" selected><%=c.getCategoryName() %></option>
-			<%
-					} else{
-			%>
-						<option value="<%=c.getCategoryName() %>"><%=c.getCategoryName() %></option>
-			<%
-					}
-			%>
-			<%	
-				}
-			%>
-		</select>
-		<input class="btn btn-outline-dark" type="submit" value="출력하기">
-	</form>
-	
-	<!-- 전자책 목록 출력 : 카테코리별 출력 -->
-	<form action="<%=request.getContextPath()%>/admin/selectEbookList.jsp" method="post">
-	<table class="table table-secondary table-bordered" border="1">
-		<thead>
-			<tr>	
-				<th>ebookNo</th>
-				<th>categoryName</th>
-				<th>ebookTitle</th>
-				<th>ebookState</th>
-			</tr>
-		</thead>
-		<tbody>
-			<%
-				for(Ebook e : ebookList) {
-			%>
-					<tr>
-						<td><%=e.getEbookNo()%></td>
-						<td><%=e.getCategoryName()%></td>
-						<td><a href="<%=request.getContextPath()%>/admin/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></td>
-						<td><%=e.getEbookState()%></td>
-					</tr>	
-			<% 		
-				}
-			%>
-		</tbody>
-	</table>
-	</form>
-		<div class="text-center">
-		<%
-			// (1)에서 생성한 loginMember변수 사용
-			// [처음으로(<<)] 버튼
-		%>
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=1&categoryName=<%=categoryName%>">[처음으로]</a>
-		<%
-			// [이전(<)] 버튼
-			// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
-			if(startPage > displayPage) {
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=startPage-displayPage%>&categoryName=<%=categoryName%>">[이전]</a>
-		<% 		
-			}
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4> 전자책 관리 페이지 </h4>
+		</div>
 		
-			// 페이지 번호[1,2,3..9] 버튼
-			for(int i=startPage; i<=endPage; i++) {
-				System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=i%>&categoryName=<%=categoryName%>">[<%=i%>]</a>
-		<% 		
-			}
+		<div>
+			<form action="<%=request.getContextPath()%>/admin/selectEbookList.jsp" method="post">
+				<select name="categoryName">
+					<%
+						if(categoryName==""){
+					%>
+							<option value="" selected>전체목록</option>
+					<%
+						} else{
+					%>
+							<option value="">전체목록</option>
+					<%
+						}
+					%>
+					<%
+						for(Category c : categoryList){
+							if(categoryName.equals(c.getCategoryName())){
+					%>
+								<option value="<%=c.getCategoryName() %>" selected><%=c.getCategoryName() %></option>
+					<%
+							} else{
+					%>
+								<option value="<%=c.getCategoryName() %>"><%=c.getCategoryName() %></option>
+					<%
+							}
+					%>
+					<%	
+						}
+					%>
+				</select>
+				<input class="btn btn-outline-dark" type="submit" value="출력하기">
+				<a class="btn btn-outline-danger" href="<%=request.getContextPath()%>/admin/insertEbookForm.jsp">추가하기</a>
+			</form>
 			
-			// [다음(>)] 버튼
-			// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
-			if(endPage < lastPage) {
-		%>
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=currentPage+1%>&categoryName=<%=categoryName%>">[다음]</a>
-		<% 		
-			}
-			
-			// [끝으로(>>)] 버튼
-		%>	
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=lastPage%>&categoryName=<%=categoryName%>">[끝으로]</a>
-		</div>	
+			<!-- 전자책 목록 출력 : 카테코리별 출력 -->
+			<form action="<%=request.getContextPath()%>/admin/selectEbookList.jsp" method="post">
+			<table class="table table-secondary table-bordered" style="text-align:center;" border="1">
+				<thead>
+					<tr>	
+						<th>전자책 번호</th>
+						<th>카테고리 이름</th>
+						<th>전자책 제목</th>
+						<th>전자책 상태</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for(Ebook e : ebookList) {
+					%>
+							<tr>
+								<td><%=e.getEbookNo()%></td>
+								<td><%=e.getCategoryName()%></td>
+								<td><a href="<%=request.getContextPath()%>/admin/selectEbookOne.jsp?ebookNo=<%=e.getEbookNo()%>"><%=e.getEbookTitle()%></a></td>
+								<td><%=e.getEbookState()%></td>
+							</tr>	
+					<% 		
+						}
+					%>
+				</tbody>
+			</table>
+			</form>
+				<div class="text-center">
+				<%
+					// (1)에서 생성한 loginMember변수 사용
+					// [처음으로(<<)] 버튼
+				%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=1&categoryName=<%=categoryName%>">[처음으로]</a>
+				<%
+					// [이전(<)] 버튼
+					// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
+					if(startPage > displayPage) {
+				%>
+						<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=startPage-displayPage%>&categoryName=<%=categoryName%>">[이전]</a>
+				<% 		
+					}
+				
+					// 페이지 번호[1,2,3..9] 버튼
+					for(int i=startPage; i<=endPage; i++) {
+						System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
+				%>
+						<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=i%>&categoryName=<%=categoryName%>">[<%=i%>]</a>
+				<% 		
+					}
+					
+					// [다음(>)] 버튼
+					// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
+					if(endPage < lastPage) {
+				%>
+						<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=currentPage+1%>&categoryName=<%=categoryName%>">[다음]</a>
+				<% 		
+					}
+					
+					// [끝으로(>>)] 버튼
+				%>	
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/admin/selectEbookList.jsp?currentPage=<%=lastPage%>&categoryName=<%=categoryName%>">[끝으로]</a>
+				</div>	
+			</div>
 	</div>
 </body>
 </html>

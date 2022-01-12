@@ -65,47 +65,50 @@
 	<% 		
 		}
 	%>
-	
-	<div class="jumbotron">
-	<h1>* <%=memberNo%>번 회원의 <%=qnaNo%>번 QnA 게시글 수정 *</h1>
-	<form id="updateForm" action="<%=request.getContextPath()%>/updateQnaAction.jsp" method="post">
-		<input type="hidden" name="qnaNo" value=<%=qnaNo%>>
-		<input type="hidden" name="memberNo" value=<%=memberNo%>>
-		<table class="table table-secondary table-bordered" border="1">
-			<tr>
-				<th>qnaCategory</th>
-				<td>
-					<select class="btn btn-outline-secondary" name="qnaCategory" >
-						<option class="qnaCategory" value="개인정보관련">개인정보관련</option>
-						<option class="qnaCategory" value="전자책관련">전자책관련</option>
-						<option class="qnaCategory" value="주문관련">주문관련</option>
-						<option class="qnaCategory" value="공지사항관련">공지사항관련</option>
-						<option class="qnaCategory" value="기타">기타</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<th>qnaSecret</th>
-				<td>
-					<input type="radio" class="qnaSecret" name="qnaSecret" value="Y">Y (개방글)
-					<input type="radio" class="qnaSecret" name="qnaSecret" value="N">N (비밀글)
-				</td>
-			</tr>
-			<tr>
-				<th>qnaTitle</th>
-				<td><input class="btn btn-outline-secondary" type="text" id="qnaTitle" name="qnaTitle" placeholder="qnaTitle 입력"></td>
-			</tr>
-			<tr>
-				<th>qnaContent</th>
-				<td><textarea class="btn btn-outline-secondary" id="qnaContent" name="qnaContent" rows="5" cols="100" placeholder="qnaContent 입력"></textarea></td>
-			</tr>
-		</table>
-		<div>
-			<input class="btn btn-dark" id="updateBtn" type="button" value="수정하기">
-			<input class="btn btn-dark" type="reset" value="초기화">
-			<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4><%=loginMember.getMemberName()%> 회원의 <%=qnaNo%>번 QnA 게시글 수정</h4>
 		</div>
-	</form>
+		<div>
+			<form id="updateForm" action="<%=request.getContextPath()%>/updateQnaAction.jsp" method="post">
+				<input type="hidden" name="qnaNo" value=<%=qnaNo%>>
+				<input type="hidden" name="memberNo" value=<%=memberNo%>>
+				<table class="table table-secondary table-bordered" border="1">
+					<tr>
+						<th>카테고리</th>
+						<td>
+							<select class="btn btn-outline-secondary" name="qnaCategory" >
+								<option class="qnaCategory" value="개인정보관련">개인정보관련</option>
+								<option class="qnaCategory" value="전자책관련">전자책관련</option>
+								<option class="qnaCategory" value="주문관련">주문관련</option>
+								<option class="qnaCategory" value="공지사항관련">공지사항관련</option>
+								<option class="qnaCategory" value="기타">기타</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>비밀여부</th>
+						<td>
+							<input type="radio" class="qnaSecret" name="qnaSecret" value="Y">Y (개방글)
+							<input type="radio" class="qnaSecret" name="qnaSecret" value="N">N (비밀글)
+						</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><input class="btn btn-outline-secondary" type="text" id="qnaTitle" name="qnaTitle" placeholder="제목 입력"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea class="btn btn-outline-secondary" id="qnaContent" name="qnaContent" rows="5" cols="100" placeholder="내용 입력"></textarea></td>
+					</tr>
+				</table>
+				<div style="text-align:center;">
+					<input class="btn btn-dark" id="updateBtn" type="button" value="수정하기">
+					<input class="btn btn-dark" type="reset" value="초기화">
+					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+			</form>
+		</div>
 	</div>
 	
 	<script>

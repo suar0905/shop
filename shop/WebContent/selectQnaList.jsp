@@ -82,23 +82,28 @@
 <% 		
 	}
 %>
-	<div class="jumbotron">
-		<h1>* QnA 게시판 *</h1>
+	<div class="container">
+		<div class="jumbotron" style="text-align:center;">
+			<h4> QnA 게시판 </h4>
+		</div>	
+		<div style="text-align:right;">
 			<%
 				// 로그인 한사람만 가능하도록(회원 및 관리자)
 				if(loginMember != null) {
 			%> 
-					<a class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/insertQnaForm.jsp?memberNo=<%=loginMember.getMemberNo()%>">QnA 추가하기</a>
+					<a class="btn btn-outline-danger" href="<%=request.getContextPath()%>/insertQnaForm.jsp?memberNo=<%=loginMember.getMemberNo()%>">QnA 작성하기</a>
 			<% 		
 				}
 			%>
-			<table class="table table-secondary table-bordered" border="1">
+		</div>	
+		<div>
+			<table class="table table-hover" border="1" style="text-align:center;">
 				<thead>
 					<tr>
-						<th>qnaNo</th>
-						<th>qnaCategory</th>
-						<th>qnaTitle</th>
-						<th>qnaSecret</th>
+						<th>번호</th>
+						<th>카테고리</th>
+						<th>제목</th>
+						<th>비밀여부</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -128,41 +133,42 @@
 					%>
 				</tbody>
 			</table>
-			<div class="text-center">
-				<%
-					// (1)에서 생성한 loginMember변수 사용
-					// [처음으로(<<)] 버튼
-				%>
-					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=1">[처음으로]</a>
-				<%
-					// [이전(<)] 버튼
-					// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
-					if(startPage > displayPage) {
-				%>
-						<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=startPage-displayPage%>">[이전]</a>
-				<% 		
-					}
+		</div>
+		<div class="text-center">
+			<%
+				// (1)에서 생성한 loginMember변수 사용
+				// [처음으로(<<)] 버튼
+			%>
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=1">[처음으로]</a>
+			<%
+				// [이전(<)] 버튼
+				// 화면에 보여질 시작 페이지 번호가 화면에 보여질 페이지 번호의 개수보다 크다면 이전 버튼을 생성
+				if(startPage > displayPage) {
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=startPage-displayPage%>">[이전]</a>
+			<% 		
+				}
+			
+				// 페이지 번호[1,2,3..9] 버튼
+				for(int i=startPage; i<=endPage; i++) {
+					System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=i%>">[<%=i%>]</a>
+			<% 		
+				}
 				
-					// 페이지 번호[1,2,3..9] 버튼
-					for(int i=startPage; i<=endPage; i++) {
-						System.out.println("[debug] 만들어지는 페이지 수 -> " + i);
-				%>
-						<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=i%>">[<%=i%>]</a>
-				<% 		
-					}
-					
-					// [다음(>)] 버튼
-					// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
-					if(endPage < lastPage) {
-				%>
-						<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
-				<% 		
-					}
-					
-					// [끝으로(>>)] 버튼
-				%>	
-					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=lastPage%>">[끝으로]</a>
-			</div>
+				// [다음(>)] 버튼
+				// 화면에 보여질 마지막 페이지 번호가 마지막 페이지 보다 작아지면 이전 버튼을 생성
+				if(endPage < lastPage) {
+			%>
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
+			<% 		
+				}
+				
+				// [끝으로(>>)] 버튼
+			%>	
+				<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaList.jsp?currentPage=<%=lastPage%>">[끝으로]</a>
+		</div>
 	</div>
 </body>
 </html>

@@ -63,12 +63,15 @@
 	<% 		
 		}
 	%>
-		<div class="jumbotron">
-			<h3>* 정말로 <%=qnaNo%>번 QnA 게시글을 삭제하시겠습니까?*</h3>
-			<form id="deleteForm" action="<%=request.getContextPath()%>/deleteQnaAction.jsp?qnaNo=<%=qnaNo%>" method="post">
-				<input class="btn btn-dark" type="button" id="deleteBtn" value="삭제하기">
-				<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaOne.jsp">뒤로가기</a>
-			</form>	
+		<div class="container"> 
+			<div class="jumbotron">
+				<h4>정말로 <%=qnaNo%>번 QnA 게시글을 삭제하시겠습니까?</h4><br>
+				
+				<form id="deleteForm" action="<%=request.getContextPath()%>/deleteQnaAction.jsp?qnaNo=<%=qnaNo%>" method="post">
+					<input class="btn btn-dark" type="button" id="deleteBtn" value="삭제하기">
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectQnaOne.jsp">뒤로가기</a>
+				</form>	
+			</div>
 		</div>
 		
 		<script>

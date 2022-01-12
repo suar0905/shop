@@ -71,19 +71,21 @@
 	<% 		
 		}
 	%>
-	
-	<div class="jumbotron">
-		<h1>나의 주문목록 페이지</h1>
-		<table class="table table-secondary table-bordered" border="1">
-			<thead>
+	<div class="container">
+		<div class="jumbotron" style="text-align:center;">
+			<h4>나의 주문목록 페이지</h4>
+		</div>
+		
+		<div style="text-align:center;">
+		<table class="table table-hover" border="2">
+			<thead class="thead-secondary">
 				<tr>
-					<th>orderNo</th>
-					<th>ebookTitle</th>
-					<th>orderPrice</th>
-					<th>createDate</th>
-					<th>memberId</th>
-					<th>상세주문내역</th>
-					<th>ebook후기</th>
+					<th>주문번호</th>
+					<th>전자책 제목</th>
+					<th>주문 가격</th>
+					<th>주문일</th>
+					<th>구매자 이름</th>
+					<th>전자책 후기</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -96,7 +98,6 @@
 							<td><%=oem.getOrder().getOrderPrice()%></td>
 							<td><%=oem.getOrder().getCrateDate()%></td>
 							<td><%=oem.getMember().getMemberId()%></td>
-							<td><a class="btn btn-outline-dark" href="">상세주문내역</a></td>
 							<% 
 								// 후기가 없다면
 								if(orderCommentDao.selectOrderEbookCommentCheck(oem.getOrder().getOrderNo(), oem.getEbook().getEbookNo()) == 0) {
@@ -117,6 +118,7 @@
 		</table>
 		<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectOrderListByMember.jsp?currentPage=<%=currentPage-1%>">[이전]</a>
 		<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectOrderListByMember.jsp?currentPage=<%=currentPage+1%>">[다음]</a>
+		</div>
 	</div>
 </body>
 </html>

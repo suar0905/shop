@@ -31,43 +31,47 @@
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
 	</div>
 	
-	<div class="jumbotron">
-		<h1>* 카테고리 추가 페이지 *</h1>
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+		<h4>카테고리 추가 페이지</h4>
+		</div>
 		
-		<!-- 카테고리이름(categoryName) 중복여부 확인하는 폼 -->
-		<form action="<%=request.getContextPath()%>/admin/selectCategoryNameCheckAction.jsp" method="post">
-			<div>
-				중복 카테고리이름 검사 :
-				<input class="btn btn-outline-secondary" type="text" name="categoryNameCheck" placeholder="Enter Name">
-				<input class="btn btn-outline-dark" type="submit" value="중복 카테고리이름 검사하기">
-				<input type="hidden" value="<%=request.getParameter("existName")%>"> 
-			</div>
-		</form>
-		
-		<!-- 카테고리 추가 폼 -->
-		<form action="<%=request.getContextPath()%>/admin/insertCategoryAction.jsp" method="post">
-			<table class="table table-secondary table-bordered" border="1">
-				<tr>
-					<th>카테고리 이름</th>
-					<td><input class="btn btn-outline-secondary" type="text" name="categoryName" value="<%=categoryNameCheck%>" readonly="readonly" placeholder="Enter checkName"></td>
-				</tr>
-				<tr>
-					<th>카테고리 상태</th>
-					<td>
-						<select name="categoryState">
-							<option value="Y">Y</option>
-							<option value="N">N</option>
-						</select>
-					</td>
-				</tr>
-			</table>
-			<br>
-			<div>
-				<input class="btn btn-dark" type="submit" value="추가하기">
-				<input class="btn btn-dark" type="reset" value="초기화">
-				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
-			</div>
-		</form>
+		<div>
+			<!-- 카테고리이름(categoryName) 중복여부 확인하는 폼 -->
+			<form action="<%=request.getContextPath()%>/admin/selectCategoryNameCheckAction.jsp" method="post">
+				<div>
+					중복 카테고리이름 검사 :
+					<input class="btn btn-light" type="text" name="categoryNameCheck" placeholder="Enter Name">
+					<input class="btn btn-outline-dark" type="submit" value="중복 카테고리이름 검사하기">
+					<input type="hidden" value="<%=request.getParameter("existName")%>"> 
+				</div>
+			</form>
+			
+			<!-- 카테고리 추가 폼 -->
+			<form action="<%=request.getContextPath()%>/admin/insertCategoryAction.jsp" method="post">
+				<table class="table table-secondary table-bordered" border="1">
+					<tr>
+						<th>카테고리 이름</th>
+						<td><input class="btn btn-outline-secondary" type="text" name="categoryName" value="<%=categoryNameCheck%>" readonly="readonly" placeholder="Enter checkName"></td>
+					</tr>
+					<tr>
+						<th>카테고리 상태</th>
+						<td>
+							<select name="categoryState">
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<br>
+				<div>
+					<input class="btn btn-dark" type="submit" value="추가하기">
+					<input class="btn btn-dark" type="reset" value="초기화">
+					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

@@ -50,13 +50,17 @@
 	<% 		
 		}
 	%>
-	
-	<div class="jumbotron">
-		<h3><%=memberName%>님 정말로 회원탈퇴 하시겠습니까?</h3>
-		<form id="deleteForm" action="<%=request.getContextPath()%>/deleteMemberInfoAction.jsp?memberNo=<%=memberNo%>&memberName=<%=memberName%>" method="post">
-			<input class="btn btn-dark" id="deleteBtn" type="button" value="회원탈퇴 하기">
-			<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectMemberInfo.jsp">뒤로가기</a>
-		</form>
+	<div class="container"> 
+		<div class="jumbotron">
+			<h3><%=memberName%>님 정말로 회원탈퇴 하시겠습니까?</h3>	<br>
+			
+			<div>
+				<form id="deleteForm" action="<%=request.getContextPath()%>/deleteMemberInfoAction.jsp?memberNo=<%=memberNo%>&memberName=<%=memberName%>" method="post">
+					<input class="btn btn-dark" id="deleteBtn" type="button" value="회원탈퇴 하기">
+					<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectMemberInfo.jsp">뒤로가기</a>
+				</form>
+			</div>
+		</div>
 	</div>
 	
 	<script>

@@ -19,7 +19,7 @@
 	// multipart/form-date로 넘겨졌기 때문에 request.getParameter("ebookNo")형태로 사용불가하다.
 	
 	// MultipartRequest 매개변수 순서 - > (매개변수, 어디에 저장될것인지, 용량, 인코딩, DefaultFileRenamePolicy)
-	MultipartRequest mr = new MultipartRequest(request, "C:/다운받은 파일/git-shop/shop/WebContent/image",1024*1024*1024, "utf-8", new DefaultFileRenamePolicy()); // 1024*1024*1024 = 1기가바이트
+	MultipartRequest mr = new MultipartRequest(request, "C:/Users/gustn/git/shop/shop/WebContent/image",1024*1024*1024, "utf-8", new DefaultFileRenamePolicy()); // 1024*1024*1024 = 1기가바이트
 	
 	int ebookNo = Integer.parseInt(mr.getParameter("ebookNo"));
 	String ebookImg = mr.getFilesystemName("ebookImg");

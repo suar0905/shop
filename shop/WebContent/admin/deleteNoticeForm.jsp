@@ -39,31 +39,31 @@
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
 	</div>
 	<!-- end : mainMenu include -->
-	
-	<div class="jumbotron">
-	<h1>* 공지사항 삭제 *</h1>
-	<form id="deleteForm" action="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp" method="post">
-		<div><input type="hidden" name="noticeNo" value="<%=noticeNo%>"></div>
-		<table class="table table-secondary table-bordered" border="1">
-			<tr>
-				<th>noticeTitle</th>
-				<td><input class="btn btn-outline-secondary" type="text" value="<%=noticeTitle%>" readonly="readonly"></td>
-			</tr>
-			<tr>
-				<th>noticeContent</th>
-				<td><textarea class="btn btn-outline-secondary" rows="5" cols="100" readonly="readonly"><%=noticeContent%></textarea></td>
-			</tr>
-			<tr>
-				<th>memberNo</th>
-				<td><input class="btn btn-outline-secondary" type="text" value="<%=memberNo%>" readonly="readonly"></td>
-			</tr>
-		</table>
-		<h3>정말로 <%=noticeNo%>번 공지를 삭제하시겠습니까?</h3>
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4> 공지사항 삭제 </h4>
+		</div>	
+		
 		<div>
-			<input class="btn btn-dark" id="deleteBtn" type="button" value="삭제하기">
-			<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+		<form id="deleteForm" action="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp" method="post">
+			<div><input type="hidden" name="noticeNo" value="<%=noticeNo%>"></div>
+			<table class="table table-secondary table-bordered" border="1">
+				<tr>
+					<th>공지사항 제목</th>
+					<td><input class="btn btn-outline-secondary" type="text" value="<%=noticeTitle%>" readonly="readonly"></td>
+				</tr>
+				<tr>
+					<th>공지사항 내용</th>
+					<td><textarea class="btn btn-outline-secondary" rows="5" cols="100" readonly="readonly"><%=noticeContent%></textarea></td>
+				</tr>
+			</table>
+			<h3>정말로 <%=noticeNo%>번 공지를 삭제하시겠습니까?</h3>
+			<div>
+				<input class="btn btn-dark" id="deleteBtn" type="button" value="삭제하기">
+				<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+			</div>
+		</form>
 		</div>
-	</form>
 	</div>
 	
 	<script>

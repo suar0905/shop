@@ -48,11 +48,16 @@
 	<% 		
 		}
 	%>
-	
-	<div class="jumbotron">
-		<h3>* 비밀번호를 변경해주세요 *</h3>
+	<div class="container"> 
+		<div class="jumbotron">
+			<h4 style="text-align:center;">비밀번호를 변경해주세요</h4>
+		</div>
 		<form id="updateForm" action="<%=request.getContextPath()%>/updateMemberInfoPwAction.jsp?memberNo=<%=memberNo%>" method="post">
-			<div>변경할 비밀번호 : <input class="btn btn-outline-secondary" type="password" id="memberNewPw" name="memberNewPw" placeholder="새로운 비밀번호 입력"></div>
+			<div class="form-group">
+		      <h4><label class="form-label mt-4">변경할 비밀번호</label></h4>
+		      <input class="form-control" style="text-align:left;" type="password" id="memberNewPw" name="memberNewPw" placeholder="새로운 비밀번호 입력">
+		    </div>
+		    
 			<br>
 			<input class="btn btn-dark" id="updateBtn" type="button" value="변경하기">
 			<a class="btn btn-dark" href="<%=request.getContextPath()%>/selectMemberInfo.jsp">뒤로가기</a>

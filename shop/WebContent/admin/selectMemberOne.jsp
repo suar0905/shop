@@ -50,41 +50,46 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div class="jumbotron">
-		<h1><%=memberNo%>번 회원 상세보기</h1>
-		<table class="table table-secondary table-bordered" border="1">
-			<thead>
-				<tr>
-					<th>memberNo</th>
-					<th>memberId</th>
-					<th>memberLevel</th>
-					<th>memberName</th>
-					<th>memberAge</th>
-					<th>memberGender</th>
-					<th>updateDate</th>
-					<th>createDate</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-					for(Member m : memberList) {
-				%>
-						<tr>
-							<td><%=m.getMemberNo()%></td>
-							<td><%=m.getMemberId()%></td>
-							<td><%=m.getMemberLevel()%></td>
-							<td><%=m.getMemberName()%></td>
-							<td><%=m.getMemberAge()%></td>
-							<td><%=m.getMemberGender()%></td>
-							<td><%=m.getUpdateDate()%></td>
-							<td><%=m.getCreateDate()%></td>
-						</tr>
-				<% 		
-					}
-				%>
-			</tbody>
-		</table>
-		<div><input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();"></div>
-	</div>	
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4><%=memberNo%>번 회원 상세보기</h4>
+		</div>	
+		
+		<div>
+			<table class="table table-secondary table-bordered" style="text-align:center;" border="1">
+				<thead>
+					<tr>
+						<th>회원번호</th>
+						<th>회원아이디</th>
+						<th>회원등급</th>
+						<th>회원이름</th>
+						<th>회원나이</th>
+						<th>회원성별</th>
+						<th>가입일</th>
+						<th>수정일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for(Member m : memberList) {
+					%>
+							<tr>
+								<td><%=m.getMemberNo()%></td>
+								<td><%=m.getMemberId()%></td>
+								<td><%=m.getMemberLevel()%></td>
+								<td><%=m.getMemberName()%></td>
+								<td><%=m.getMemberAge()%></td>
+								<td><%=m.getMemberGender()%></td>
+								<td><%=m.getUpdateDate()%></td>
+								<td><%=m.getCreateDate()%></td>
+							</tr>
+					<% 		
+						}
+					%>
+				</tbody>
+			</table>
+			<div><input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();"></div>
+		</div>	
+	</div>
 </body>
 </html>

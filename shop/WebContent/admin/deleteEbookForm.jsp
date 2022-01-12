@@ -42,14 +42,20 @@
 	</div>
 	<!-- end : mainMenu include -->
 	
-	<div class="jumbotron">
-	<form action="<%=request.getContextPath()%>/admin/deleteEbookAction.jsp?ebookNo=<%=ebookNo%>&ebookTitle=<%=ebookTitle%>" method="post">
-		<h2>● <%=ebookNo%>번 '<%=ebookTitle%>' 전자책을 정말로 삭제하시겠습니까?</h2>
-		<div>
-			<input class="btn btn-dark" type="submit" value="삭제하기">
-			<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4>'<%=ebookTitle%>' 전자책 삭제</h4>
 		</div>
-	</form>	
+		
+		<div>	
+			<form action="<%=request.getContextPath()%>/admin/deleteEbookAction.jsp?ebookNo=<%=ebookNo%>&ebookTitle=<%=ebookTitle%>" method="post">
+				<h2>● 해당 전자책을 정말로 삭제하시겠습니까?</h2>
+				<div>
+					<input class="btn btn-outline-danger" type="submit" value="삭제하기">
+					<input class="btn btn-outline-danger" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+			</form>	
+		</div>
 	</div>
 </body>
 </html>

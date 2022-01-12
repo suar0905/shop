@@ -28,30 +28,31 @@
 		<jsp:include page="/partial/adminMenu.jsp"></jsp:include>
 	</div>
 	<!-- end : mainMenu include -->
-	
-	<div class="jumbotron">
-	<h1>* 공지사항 추가 *</h1>
-	<form id="insertForm" action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
-		<table class="table table-secondary table-bordered" border="1">
-			<tr>
-				<th>noticeTitle</th>
-				<td><input class="btn btn-outline-secondary" type="text" id="noticeTitle" name="noticeTitle" placeholder="Enter Title"></td>
-			</tr>
-			<tr>
-				<th>noticeContent</th>
-				<td><textarea class="btn btn-outline-secondary" id="noticeContent" name="noticeContent" rows="5" cols="100" placeholder="Enter Content"></textarea></td>
-			</tr>
-			<tr>
-				<th>memberNo</th>
-				<td><input class="btn btn-outline-secondary" type="text" id="memberNo" name="memberNo" placeholder="Enter MemberNo"></td>
-			</tr>
-		</table>
-		<div>
-			<input class="btn btn-dark" id="insertBtn" type="button" value="추가하기">
-			<input class="btn btn-dark" type="reset" value="초기화">
-			<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+	<div class="container"> 
+		<div class="jumbotron" style="text-align:center;">
+			<h4> 공지사항 추가 </h4>
 		</div>
-	</form>
+		
+		<div>
+			<form id="insertForm" action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
+				<input class="btn btn-outline-secondary" type="hidden" id="memberNo" name="memberNo" value="<%=loginMember.getMemberNo()%>">
+				<table class="table table-secondary table-bordered" border="1">
+					<tr>
+						<th>공지사항 제목</th>
+						<td><input class="btn btn-outline-secondary" type="text" id="noticeTitle" name="noticeTitle" placeholder="Enter Title"></td>
+					</tr>
+					<tr>
+						<th>공지사항 내용</th>
+						<td><textarea class="btn btn-outline-secondary" id="noticeContent" name="noticeContent" rows="5" cols="100" placeholder="Enter Content"></textarea></td>
+					</tr>
+				</table>
+				<div>
+					<input class="btn btn-dark" id="insertBtn" type="button" value="추가하기">
+					<input class="btn btn-dark" type="reset" value="초기화">
+					<input class="btn btn-dark" type="button" value="뒤로가기" onclick="history.back();">
+				</div>
+			</form>
+		</div>
 	</div>
 	
 	<script>
